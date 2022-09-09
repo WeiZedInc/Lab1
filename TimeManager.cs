@@ -22,7 +22,7 @@ static class TimeManager
             Console.WriteLine("6.Find day by date");
             Console.WriteLine("7.Use timezone");
             Console.WriteLine("8.Find the most popular day of the week by date range");
-            Console.WriteLine("9.Change calendar for the date");
+            Console.WriteLine("9.Switch date to the julian calendar");
 
             switch (Console.ReadLine())
             {
@@ -63,7 +63,9 @@ static class TimeManager
                     break;
                 case "9":
                     Console.Clear();
-                    ChangeCalendar();
+                    ValidateDateTime();
+                    DateTime dateTime = DateTime.FromOADate((firstCustomTime.ToOADate() + 2415018.5));
+                    Console.WriteLine("Julian date for your date is: " + dateTime + '\n'); // may be incorrect, can not rly understand what is juliand dates formula, but seems it is it
                     break;
                 default:
                     Console.Clear();
@@ -401,26 +403,5 @@ static class TimeManager
         }
 
         Console.WriteLine("The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.");
-    }
-
-    static void ChangeCalendar()
-    {
-        ValidateDateTime();
-        Console.WriteLine("To which calendar do you want to switch the date?");
-        Console.WriteLine("julian / ");
-        string calendar = Console.ReadLine();
-        switch (calendar)
-        {
-            case "julian":
-                Console.WriteLine(firstCustomTime.ToJulianDate().ToString());  
-                break;
-            default:
-                break;
-        }
-    }
-
-    public static double ToJulianDate(this DateTime date)
-    {
-        return date.ToOADate() + 2415018.5;
     }
 }
