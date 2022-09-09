@@ -12,7 +12,7 @@
     {
         try
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Time menu:");
             Console.WriteLine("1.Show current time"); 
             Console.WriteLine("2.Validate your time"); 
@@ -20,6 +20,7 @@
             Console.WriteLine("4.Add time to time");
             Console.WriteLine("5.Subtract time from time");
             Console.WriteLine("6.Find day by date");
+            Console.WriteLine("7.Use timezone");
 
             switch (Console.ReadLine())
             {
@@ -50,8 +51,14 @@
                     if (ValidateDateTime())
                         Console.WriteLine("Full date is: " + firstCustomTime.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
                     break;
+                case "7":
+                    Console.Clear();
+                    SwitchTimeZones();
+                    break;
                 default:
-                    Console.WriteLine("Wrong menu number.");
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wrong menu number.\n");
                     break;
             }
             TimeMenuSwitcher();
@@ -67,6 +74,7 @@
         Console.WriteLine("Enter your time...");
         if (!DateTime.TryParse(Console.ReadLine(), out DateTime dt))
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("DateTime isn't correct");
             return false;
         }
@@ -107,7 +115,9 @@
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Answer isn't correct, try again.");
+            return;
         }
 
         Console.WriteLine("In which format do you want to get result?");
@@ -157,6 +167,7 @@
                         Console.WriteLine("Enter days amount:");
                         if (!float.TryParse(Console.ReadLine(), out value))
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Incorrect input.");
                             return;
                         }
@@ -165,6 +176,7 @@
                         Console.WriteLine("Enter hours amount:");
                         if (!float.TryParse(Console.ReadLine(), out value))
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Incorrect input.");
                             return;
                         }
@@ -181,16 +193,19 @@
                         Console.WriteLine("Enter second amount:");
                         if (!float.TryParse(Console.ReadLine(), out value))
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Incorrect input.");
                             return;
                         }
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Incorrect format.");
                         return;
                 }
                 break;
             default:
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Incorrect input.");
                 return;
         }
@@ -217,6 +232,7 @@
                     Console.WriteLine("Result is: " + firstCustomTime.AddDays(customTimeSpan.TotalDays));
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Idk how did u get here :3");
                     break;
             }
@@ -242,6 +258,7 @@
                     Console.WriteLine("Result is: " + firstCustomTime.AddDays(-customTimeSpan.TotalDays));
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Idk how did u get here :3");
                     break;
             }
@@ -254,8 +271,68 @@
         var currentTime = DateTime.Now;
         Console.WriteLine("Current time: " + currentTime.ToString("\tdddd, dd MMMM yyyy HH:mm:ss"));
         Console.WriteLine("Short variant: \t" + currentTime);
-        Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K"));
-        Console.WriteLine();
+        Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K\n"));
     }
 
+    static void SwitchTimeZones()
+    {
+        Console.WriteLine("Do you want to see all time zones? y/n \n");
+        string timeInput = Console.ReadLine();
+        string newTimeZone = "Pacific Standard Time";
+        if (timeInput == "y")
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (TimeZoneInfo tz in TimeZoneInfo.GetSystemTimeZones())
+                Console.WriteLine(tz.DisplayName + " - \n" + tz.Id + "\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        Console.WriteLine("\n\n Do you want to change time zone for current computer time, or new? current/new ");
+        string input = Console.ReadLine();
+        if (input == "current")
+        {
+            Console.WriteLine("Enter prefered time zone (use only english timezone names from the offered list):");
+            newTimeZone = Console.ReadLine();
+            var currentTime = DateTime.Now;
+            try
+            {
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
+                var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                Console.WriteLine("Local time in other time zone: " + date + " " + tz.DisplayName + '\n');
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There are no such time zone.");
+                return;
+            }
+            
+
+        }
+        else if (input == "new")
+        {
+            ValidateDateTime();
+
+            Console.WriteLine("Enter prefered time zone:");
+            newTimeZone = Console.ReadLine();
+            try
+            {
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
+                var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                Console.WriteLine("New time in other time zone: " + date + " " + tz.DisplayName + '\n');
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There are no such time zone.");
+                return;
+            }
+            
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Wrong input.");
+        }
+    }
 }
