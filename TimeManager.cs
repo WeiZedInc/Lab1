@@ -1,4 +1,6 @@
-﻿class TimeManager
+﻿using System.Globalization;
+
+static class TimeManager
 {
     static DateTime firstCustomTime = new DateTime();
     static DateTime secondCustomTime = new DateTime();
@@ -13,10 +15,14 @@
             Console.WriteLine("1.Show current time");
             Console.WriteLine("2.Validate your time");
             Console.WriteLine("3.Substract your time with another time");
+            Console.WriteLine("---------------------------------");
             Console.WriteLine("4.Add time to time");
             Console.WriteLine("5.Subtract time from time");
+            Console.WriteLine("---------------------------------");
             Console.WriteLine("6.Find day by date");
             Console.WriteLine("7.Use timezone");
+            Console.WriteLine("8.Find the most popular day of the week by date range");
+            Console.WriteLine("9.Change calendar for the date");
 
             switch (Console.ReadLine())
             {
@@ -50,6 +56,14 @@
                 case "7":
                     Console.Clear();
                     SwitchTimeZones();
+                    break;
+                case "8":
+                    Console.Clear();
+                    FindMostPopularDayOfTheWeek();
+                    break;
+                case "9":
+                    Console.Clear();
+                    ChangeCalendar();
                     break;
                 default:
                     Console.Clear();
@@ -330,5 +344,83 @@
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Wrong input.");
         }
+    }
+
+    static void FindMostPopularDayOfTheWeek()
+    {
+        Console.WriteLine("Please, enter the date range");
+        if (!ValidateDateTime() || !ValidateDateTime(false))
+            return;
+
+        Console.WriteLine("Please, enter the day of the months");
+        int dayNum = 0;
+        DateTime finishDate = DateTime.Now, startDate = DateTime.Now;
+        Dictionary<string, int> daysCounter = new Dictionary<string, int>
+        {
+            {"Monday", 0 },
+            {"Tuesday", 0 },
+            {"Wednesday", 0 },
+            {"Thursday", 0 },
+            {"Friday", 0 },
+            {"Saturday", 0 },
+            {"Sunday", 0 }
+        };
+        if (!int.TryParse(Console.ReadLine(), out dayNum) || dayNum > 31 || dayNum < 1)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Incorrect day number, try again.");
+            return;
+        }
+
+        if (DateTime.Compare(firstCustomTime, secondCustomTime) > 0)
+        {
+            startDate = secondCustomTime;
+            finishDate = firstCustomTime;
+        }
+        else if (DateTime.Compare(firstCustomTime, secondCustomTime) == 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Dates cannot be the same");
+            return;
+        }
+        else if (DateTime.Compare(firstCustomTime, secondCustomTime) < 0)
+        {
+            startDate = firstCustomTime;
+            finishDate = secondCustomTime;
+        }
+
+
+        int daysLeft = Convert.ToInt32(finishDate.Subtract(startDate).TotalDays);
+        while (daysLeft != 0)
+        {
+            if (startDate.Day == dayNum)
+                daysCounter[startDate.DayOfWeek.ToString()] += 1;
+
+            startDate = startDate.AddDays(1);
+            daysLeft--;
+        }
+
+        Console.WriteLine("The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.");
+    }
+
+    static void ChangeCalendar()
+    {
+        ValidateDateTime();
+        Console.WriteLine("To which calendar do you want to switch the date?");
+        Console.WriteLine("julian / ");
+        string calendar = Console.ReadLine();
+        switch (calendar)
+        {
+            case "julian":
+                Console.WriteLine(firstCustomTime.ToJulianDate().ToString());  
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static double ToJulianDate(this DateTime date)
+    {
+        return date.ToOADate() + 2415018.5;
     }
 }

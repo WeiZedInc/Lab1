@@ -1,11 +1,11 @@
-﻿class Programm
+﻿static class Programm
 {
     static void Main(string[] args)
     {
         MainMenu();
     }
 
-    public static void MainMenu()
+    static void MainMenu()
     {
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("Welcome to the main menu. Please choose one of the options below.");
