@@ -10,7 +10,7 @@
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("Welcome to the main menu. Please choose one of the options below.");
         Console.WriteLine("1. Time Manager");
-        Console.WriteLine("2. Poka ne reshil kakoy budet vtoraya zadacha");
+        Console.WriteLine("2. Sort Manager");
         string input = Console.ReadLine();
         switch (input)
         {
@@ -18,7 +18,7 @@
                 TimeManager.TimeMenuSwitcher();
                 break;
             case "2":
-                Console.WriteLine("Not implemented yet.");
+                SortManager.SortMenuSwitcher();
                 break;
             default:
                 Console.ForegroundColor = ConsoleColor.Red;

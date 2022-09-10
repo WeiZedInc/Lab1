@@ -65,7 +65,7 @@ static class TimeManager
                     Console.Clear();
                     ValidateDateTime();
                     DateTime dateTime = DateTime.FromOADate((firstCustomTime.ToOADate() + 2415018.5));
-                    Console.WriteLine("Julian date for your date is: " + dateTime + '\n'); // may be incorrect, can not rly understand what is juliand dates formula, but seems it is it
+                    Console.WriteLine("Julian date for your date is: " + dateTime + '\n'); // may be incorrect, can not rly understand what is julian dates formula, but seems it is it
                     break;
                 default:
                     Console.Clear();
