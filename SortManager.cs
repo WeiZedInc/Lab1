@@ -126,14 +126,11 @@
         while (i <= j)
         {
             while (arr[i] < flag)
-            {
                 i++;
-            }
 
             while (arr[j] > flag)
-            {
                 j--;
-            }
+
             if (i <= j)
             {
                 int val = arr[i];
@@ -153,6 +150,77 @@
 
     static void MergeSortInit()
     {
+        Console.WriteLine("Input values of which array contains using ',' separator:");
+        string inputValues = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputValues))
+        {
+            Console.WriteLine("Try next time to input some values...");
+            return;
+        }
+        string[] inputValuesArr = inputValues.Split(',', StringSplitOptions.TrimEntries);
+        int newValue = 0;
+        int i = 0;
+        int[] sortingArr = new int[inputValuesArr.Length];
+        foreach (var value in inputValuesArr)
+        {
+            if (!int.TryParse(value, out newValue))
+            {
+                Console.WriteLine(value + " - cannot be integer");
+                continue;
+            }
+            sortingArr[i++] = newValue;
+        }
+        sortingArr = SortMergeArr(sortingArr, 0, sortingArr.Length - 1);
 
+        Console.Write("\nSorted Array is: ");
+        for (i = 0; i < sortingArr.Length; i++)
+            Console.Write(sortingArr[i] + " ");
+    }
+    
+    static int[] SortMergeArr(int[] array, int left, int right)
+    {
+        if (left < right)
+        {
+            int middle = left + (right - left) / 2;
+            SortMergeArr(array, left, middle);
+            SortMergeArr(array, middle + 1, right);
+            MergeArr(array, left, middle, right);
+        }
+        return array;
+    }
+
+    static void MergeArr(int[] array, int left, int middle, int right)
+    {
+        var leftArrayLength = middle - left + 1;
+        var rightArrayLength = right - middle;
+        var leftTempArray = new int[leftArrayLength];
+        var rightTempArray = new int[rightArrayLength];
+        int i, j;
+        for (i = 0; i < leftArrayLength; ++i)
+            leftTempArray[i] = array[left + i];
+        for (j = 0; j < rightArrayLength; ++j)
+            rightTempArray[j] = array[middle + 1 + j];
+        i = 0;
+        j = 0;
+        int k = left;
+        while (i < leftArrayLength && j < rightArrayLength)
+        {
+            if (leftTempArray[i] <= rightTempArray[j])
+            {
+                array[k++] = leftTempArray[i++];
+            }
+            else
+            {
+                array[k++] = rightTempArray[j++];
+            }
+        }
+        while (i < leftArrayLength)
+        {
+            array[k++] = leftTempArray[i++];
+        }
+        while (j < rightArrayLength)
+        {
+            array[k++] = rightTempArray[j++];
+        }
     }
 }
