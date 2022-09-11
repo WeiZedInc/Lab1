@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-static class TimeManager
+﻿static class TimeManager
 {
     static DateTime firstCustomTime = new DateTime();
     static DateTime secondCustomTime = new DateTime();
@@ -15,10 +13,8 @@ static class TimeManager
             Console.WriteLine("1.Show current time");
             Console.WriteLine("2.Validate your time");
             Console.WriteLine("3.Substract your time with another time");
-            Console.WriteLine("---------------------------------");
             Console.WriteLine("4.Add time to time");
             Console.WriteLine("5.Subtract time from time");
-            Console.WriteLine("---------------------------------");
             Console.WriteLine("6.Find day by date");
             Console.WriteLine("7.Use timezone");
             Console.WriteLine("8.Find the most popular day of the week by date range");

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-class SortManager
+﻿static class SortManager
 {
     public static void SortMenuSwitcher()
     {
@@ -15,6 +13,7 @@ class SortManager
             Console.WriteLine("5.Counting sort");
             Console.WriteLine("6.Radix sort");
             Console.WriteLine("7.Bucket sort");
+            Console.WriteLine("8.Create random array");
 
             switch (Console.ReadLine())
             {
@@ -46,6 +45,10 @@ class SortManager
                     Console.Clear();
                     BucketSortInit();
                     break;
+                case "8":
+                    Console.Clear();
+                    CreateRandomArray();
+                    break;
                 default:
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -59,16 +62,17 @@ class SortManager
             Console.WriteLine("Exception: " + ex);
         }
     }
+    
     static int[] ConvertInput()
     {
-        Console.WriteLine("Input values of which array contains using ',' separator:");
+        Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
         {
             Console.WriteLine("Try next time to input some values...");
             return new int[0];
         }
-        string[] inputValuesArr = inputValues.Split(',', StringSplitOptions.TrimEntries);
+        string[] inputValuesArr = inputValues.Split(new string[] {" ", ",", ";"}, StringSplitOptions.TrimEntries);
         int newValue = 0;
         int i = 0;
         int[] sortingArr = new int[inputValuesArr.Length];
@@ -84,18 +88,37 @@ class SortManager
         return sortingArr;
     }
 
+    static void CreateRandomArray(int size = 29)
+    {
+        Random rand = new Random();
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            if (i % 2 == 0)
+                arr[i] = rand.Next(1, 2395);
+
+            else
+                arr[i] = (rand.Next(1, 234)) * -1;
+        }
+
+        Console.WriteLine("Created array: ");
+        for (int i = 0; i < size; i++)
+            Console.Write(arr[i] + " ");
+        Console.WriteLine();
+    }
+
     static void InsertionSort()
     {
         List<int> sortingList = new List<int>(){};
 
-        Console.WriteLine("Input values of which array contains using ',' separator:");
+        Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
         {
             Console.WriteLine("Try next time to input some values...");
             return;
         }
-        string[] inputValuesArr = inputValues.Split(',', StringSplitOptions.TrimEntries);
+        string[] inputValuesArr = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
         int newValue = 0;
         foreach (var value in inputValuesArr)
         {
@@ -251,16 +274,19 @@ class SortManager
     #endregion
 
     #region CombinationSort
-    static void Swap(ref int value1, ref int value2)
+    static void CombSortInit()
     {
-        int temp = value1;
-        value1 = value2;
-        value2 = temp;
-    }
-    static int GetNextStep(int step)
-    {
-        step = step * 1000 / 1247;
-        return step > 1 ? step : 1;
+        var watch = new System.Diagnostics.Stopwatch();
+        var sortingArr = ConvertInput();
+        watch.Start();
+        sortingArr = CombSort(sortingArr);
+        watch.Stop();
+
+        Console.Write("\nSorted Array is: ");
+        for (int i = 0; i < sortingArr.Length; i++)
+            Console.Write(sortingArr[i] + " ");
+        Console.WriteLine();
+        Console.WriteLine($"Execution Time: {watch.Elapsed} ms");
     }
     static int[] CombSort(int[] arr)
     {
@@ -297,19 +323,16 @@ class SortManager
         }
         return arr;
     }
-    static void CombSortInit()
+    static int GetNextStep(int step)
     {
-        var watch = new System.Diagnostics.Stopwatch();
-        var sortingArr = ConvertInput();
-        watch.Start();
-        sortingArr = CombSort(sortingArr);
-        watch.Stop();
-
-        Console.Write("\nSorted Array is: ");
-        for (int i = 0; i < sortingArr.Length; i++)
-            Console.Write(sortingArr[i] + " ");
-        Console.WriteLine();
-        Console.WriteLine($"Execution Time: {watch.Elapsed} ms");
+        step = step * 1000 / 1247;
+        return step > 1 ? step : 1;
+    }
+    static void Swap(ref int value1, ref int value2)
+    {
+        int temp = value1;
+        value1 = value2;
+        value2 = temp;
     }
     #endregion
 
