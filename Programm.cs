@@ -16,40 +16,7 @@ static class Programm
 {
     static void Main(string[] args)
     {
-        //MainMenu();
-
-        //MyList<int> myList = new MyList<int>();
-        //myList.Add(1);
-        //myList.Add(0);
-        //myList.Add(-3);
-        //myList.Add(22);
-        //myList.Add(245);
-        //myList.Add(11);
-        //myList.QuickSort(myList.Count-1);
-        //foreach (var item in myList)
-        //    Console.WriteLine(item);
-
-        //MyArray<int> array = new MyArray<int>(6);
-        //array[0] = 1;
-        //array[1] = 0;
-        //array[2] = -3;
-        //array[3] = 22;
-        //array[4] = 245;
-        //array[5] = 11;
-        //array.CountingSort();
-        //foreach (var item in array)
-        //    Console.WriteLine(item);
-
-        MyLinkedList<int> linkedList = new MyLinkedList<int>();
-        linkedList.AddLast(-1);
-        linkedList.AddLast(12);
-        linkedList.AddLast(33);
-        linkedList.AddLast(0);
-        linkedList.AddLast(5);
-        linkedList.MergeSort();
-        foreach (var item in linkedList)
-            Console.WriteLine(item);
-
+        SortManager.SortMenuSwitcher();
     }
 
     static void MainMenu()
