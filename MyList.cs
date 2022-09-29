@@ -145,6 +145,27 @@ namespace Lab1
                 QuickSort(i, lastIndex);
         }
 
+        public void CountingSort()
+        {
+            dynamic minVal = array.Min();
+            dynamic[] sortedArray = new dynamic[array.Length];
+            int[] counts = new int[array.Max() - minVal + 1];
+
+            for (int i = 0; i < array.Length; i++)
+                counts[array[i] - minVal]++;
+            counts[0]--;
+
+            for (int i = 1; i < counts.Length; i++)
+                counts[i] = counts[i] + counts[i - 1];
+
+            for (int i = array.Length - 1; i >= 0; i--)
+                sortedArray[counts[array[i] - minVal]--] = array[i];
+
+            for (int i = 0; i < count; i++)
+                array[i] = sortedArray[i];
+        }
+
+        #region MergeSort
         /// <param name="left">left = 0</param>
         /// <param name="right">right = (Count of all elements in list) - 1</param>
         /// <param name="array">array = default</param>
@@ -185,7 +206,9 @@ namespace Lab1
             while (j < rightArrayLength)
                 array[k++] = rightTempArray[j++];
         }
+        #endregion
 
+        #region CombSort
         public void CombSort()
         {
             int arrayLength = count;
@@ -234,25 +257,99 @@ namespace Lab1
             value1 = value2;
             value2 = temp;
         }
+        #endregion
 
-        public void CountingSort()
+        #region RadixSort
+        // Algorithm was taken from this web-site https://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Radix_sort and reworked to generic types
+        public void RadixSort()
         {
-            dynamic minVal = array.Min();
-            dynamic[] sortedArray = new dynamic[array.Length];
-            int[] counts = new int[array.Max() - minVal + 1];
+            // our helper array 
+            dynamic[] t = new dynamic[array.Length];
 
+            // number of bits our group will be long 
+            int r = 4; // try to set this also to 2, 8 or 16 to see if it is 
+                       // quicker or not 
+
+            // number of bits of a C# int 
+            int b = 32;
+
+            // counting and prefix arrays
+            // (note dimensions 2^r which is the number of all possible values of a 
+            // r-bit number) 
+            int[] count = new int[1 << r];
+            int[] pref = new int[1 << r];
+
+            // number of groups 
+            int groups = (int)Math.Ceiling((double)b / (double)r);
+
+            // the mask to identify groups 
+            int mask = (1 << r) - 1;
+
+            dynamic value = default;
+            // the algorithm: 
+            for (int c = 0, shift = 0; c < groups; c++, shift += r)
+            {
+                // reset count array 
+                for (int j = 0; j < count.Length; j++)
+                    count[j] = 0;
+
+                // counting elements of the c-th group 
+                for (int i = 0; i < array.Length; i++)
+                {
+                    value = array[i];
+                    count[(value >> shift) & mask]++;
+                }
+
+                // calculating prefixes 
+                pref[0] = 0;
+                for (int i = 1; i < count.Length; i++)
+                    pref[i] = pref[i - 1] + count[i - 1];
+
+                // from a[] to t[] elements ordered by c-th group 
+                for (int i = 0; i < array.Length; i++)
+                {
+                    value = array[i];
+                    t[pref[(value >> shift) & mask]++] = array[i];
+                }
+
+                // a[]=t[] and start again until the last group 
+                t.CopyTo(array, 0);
+            }
+        }
+        #endregion
+
+        public void BucketSort()
+        {
+            if (array == null || array.Length <= 1)
+                return;
+
+            dynamic maxValue = array.Max();
+            dynamic minValue = array.Min();
+
+            LinkedList<T>[] bucket = new LinkedList<T>[maxValue - minValue + 1];
             for (int i = 0; i < array.Length; i++)
-                counts[array[i] - minVal]++;
-            counts[0]--;
+            {
+                if (bucket[array[i] - minValue] == null)
+                    bucket[array[i] - minValue] = new LinkedList<T>();
 
-            for (int i = 1; i < counts.Length; i++)
-                counts[i] = counts[i] + counts[i - 1];
+                bucket[array[i] - minValue].AddLast(array[i]);
+            }
+            var index = 0;
 
-            for (int i = array.Length - 1; i >= 0; i--)
-                sortedArray[counts[array[i] - minVal]--] = array[i];
+            for (int i = 0; i < bucket.Length; i++)
+            {
+                if (bucket[i] != null)
+                {
+                    LinkedListNode<T> node = bucket[i].First;
+                    while (node != null)
+                    {
+                        array[index] = node.Value;
+                        node = node.Next;
+                        index++;
+                    }
+                }
+            }
 
-            for (int i = 0; i < count; i++)
-                array[i] = sortedArray[i];
         }
         #endregion
     }
