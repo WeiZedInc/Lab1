@@ -57,7 +57,6 @@ namespace Lab1
             Array.Resize(ref this.array, count);
             index++; 
             this.array[index] = mass; 
-
         }
         public T this[int index]  //indexator, list[]
         {
@@ -114,13 +113,11 @@ namespace Lab1
             }
         }
 
-        /// <param name="lastIndex">lastIndex = (Count of all elements in list) - 1</param>
-        /// <param name="startInd">startIndex = 0</param>
+
         public void QuickSort(int lastIndex, int startInd = 0)
         {
-            lastIndex = count - 1;
             int i = startInd, j = lastIndex;
-            dynamic flag = array[startInd];
+            dynamic flag = array[(startInd + lastIndex) / 2];
             while (i <= j)
             {
                 while (array[i] < flag)
@@ -145,6 +142,7 @@ namespace Lab1
                 QuickSort(i, lastIndex);
         }
 
+
         public void CountingSort()
         {
             dynamic minVal = array.Min();
@@ -165,7 +163,7 @@ namespace Lab1
                 array[i] = sortedArray[i];
         }
 
-        #region MergeSort
+
         /// <param name="left">left = 0</param>
         /// <param name="right">right = (Count of all elements in list) - 1</param>
         /// <param name="array">array = default</param>
@@ -206,9 +204,8 @@ namespace Lab1
             while (j < rightArrayLength)
                 array[k++] = rightTempArray[j++];
         }
-        #endregion
 
-        #region CombSort
+
         public void CombSort()
         {
             int arrayLength = count;
@@ -257,9 +254,8 @@ namespace Lab1
             value1 = value2;
             value2 = temp;
         }
-        #endregion
 
-        #region RadixSort
+
         // Algorithm was taken from this web-site https://en.wikibooks.org/wiki/Algorithm_Implementation/Sorting/Radix_sort and reworked to generic types
         public void RadixSort()
         {
@@ -316,7 +312,7 @@ namespace Lab1
                 t.CopyTo(array, 0);
             }
         }
-        #endregion
+
 
         public void BucketSort()
         {
