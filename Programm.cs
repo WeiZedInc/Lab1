@@ -10,11 +10,23 @@
  * Made 6* for the 9-th ex, and 3-4* for 2-nd ex
  */
 
+using Lab1;
+
 static class Programm
 {
     static void Main(string[] args)
     {
-        MainMenu();
+        //MainMenu();
+        MyList<int> myList = new MyList<int>();
+        myList.Add(1);
+        myList.Add(0);
+        myList.Add(-3);
+        myList.Add(22);
+        myList.Add(245);
+        myList.Add(11);
+        myList.SortMergeArr(0,myList.Count-1);
+        foreach (var item in myList)
+            Console.WriteLine(item);
     }
 
     static void MainMenu()
