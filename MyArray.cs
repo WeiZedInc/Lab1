@@ -52,8 +52,6 @@ namespace Lab1
             set { array[index] = value; }
         }
 
-
-
         #region interface implemetation
         int position = -1;
 
@@ -79,7 +77,6 @@ namespace Lab1
         public void Dispose() => array = new T[0];
 
         #endregion
-
 
         #region Sorting
         public void InsertionSort()

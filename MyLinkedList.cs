@@ -1,104 +1,349 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
+﻿using System.Collections;
+// https://codereview.stackexchange.com/questions/138142/linked-list-in-c
+// used that implementation of LinkedList as base, because of the lack of time
 namespace Lab1
 {
     public class Node<T>
     {
-        public T item;
+        public T data;
         public Node<T> next;
-        public Node()
-        {
-            this.next = null;
-        }
     }
 
-    internal class MyLinkedList<T>
+    internal class MyLinkedList<T> : IEnumerable<T>, IEnumerable
     {
-        public Node<T> Head { get; set; }
+        private Node<T> headNode;
+        private int count;
+        public int Count { get { { return count; } } }
         public MyLinkedList()
         {
-            this.Head = null;
+            headNode = null;
+            count = 0;
+        }
+        public MyLinkedList(IEnumerable<T> Items)
+        {
+            foreach (T item in Items)
+                AddHead(item);
         }
 
+        private IEnumerable<Node<T>> Nodes
+        {
+            get
+            {
+                Node<T> node = headNode;
+                while (node != null)
+                {
+                    yield return node;
+                    node = node.next;
+                }
+            }
+        }
+
+        private Node<T> NodeAt(int index)
+        {
+            if (index < 0 || index + 1 > count)
+            {
+                throw new IndexOutOfRangeException("Index");
+            }
+            int counter = 0;
+            foreach (Node<T> item in Nodes)
+            {
+                if (counter == index)
+                {
+                    return item;
+                }
+                counter++;
+            }
+            return null;
+        }
+
+        public void ForEach(Action<T> action)
+        {
+            foreach (Node<T> item in Nodes)
+            {
+                action(item.data);
+            }
+        }
+
+        public void AddRange(IEnumerable<T> Items)
+        {
+            foreach (T item in Items)
+            {
+                AddHead(item);
+            }
+        }
+
+        public void AddRange(params T[] Items)
+        {
+            foreach (T item in Items)
+            {
+                AddHead(item);
+            }
+        }
+
+        public T this[int index]
+        {
+            get { return NodeAt(index).data; }
+            set { NodeAt(index).data = value; }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (Node<T> item in Nodes)
+            {
+                yield return item.data;
+            }
+        }
+
+        public bool Exists(T value)
+        {
+            foreach (Node<T> item in Nodes)
+            {
+                if (Comparer<T>.Default.Compare(value, item.data) == 0)
+                    return true;
+            }
+            return false;
+        }
+
+        public void Clear()
+        {
+            headNode = null;
+            count = 0;
+        }
+
+        public void Shuffle()
+        {
+            if (headNode != null)
+            {
+                Random rRand = new Random();
+                T[] aResult = new T[count];
+                int i = 0;
+
+                foreach (Node<T> nItem in Nodes)
+                {
+                    int j = rRand.Next(i + 1);
+                    if (i != j)
+                        aResult[i] = aResult[j];
+
+                    aResult[j] = nItem.data;
+                    i++;
+                }
+                this.Clear();
+                this.AddRange(aResult);
+            }
+        }
+
+        public void MergeSort() => headNode = MergeSortSub(headNode);
+
+        private Node<T> MergeSortSub(Node<T> nHead)
+        {
+            if (nHead == null || nHead.next == null) { return nHead; }
+            Node<T> nSeeker = nHead;
+            Node<T> nMiddle = nSeeker;
+            while (nSeeker.next != null && nSeeker.next.next != null)
+            {
+                nMiddle = nMiddle.next;
+                nSeeker = nSeeker.next.next;
+            }
+            Node<T> sHalf = nMiddle.next;
+            nMiddle.next = null;
+            Node<T> nFirst = MergeSortSub(nHead);
+            Node<T> nSecond = MergeSortSub(sHalf);
+            Node<T> nResult = new Node<T>();
+            Node<T> nCurrent = nResult;
+            while (nFirst != null && nSecond != null)
+            {
+                IComparer<T> comparer = Comparer<T>.Default;
+                if (comparer.Compare(nFirst.data, nSecond.data) < 1)
+                {
+                    nCurrent.next = nFirst;
+                    nFirst = nFirst.next;
+                }
+                else
+                {
+                    nCurrent.next = nSecond;
+                    nSecond = nSecond.next;
+                }
+                nCurrent = nCurrent.next;
+            }
+            nCurrent.next = (nFirst == null) ? nSecond : nFirst;
+            return nResult.next;
+        }
 
         public void AddHead(T item)
         {
-            Node<T> newNode = new Node<T>();
-            newNode.item = item;
-            if (this.Head == null)
+            Node<T> NewNode = new Node<T>() { data = item, next = headNode };
+            headNode = NewNode;
+            count++;
+        }
+
+        public IEnumerable<int> AllIndexesOf(T Value)
+        {
+            int IndexCount = 0;
+            foreach (Node<T> item in Nodes)
             {
-                this.Head = newNode;
-            }
-            else
-            {
-                newNode.next = Head;
-                this.Head = newNode;
+                if (Comparer<T>.Default.Compare(item.data, Value) == 0)
+                    yield return IndexCount;
+                IndexCount++;
             }
         }
 
-        public void AddTail(T item)
+        public int IndexOf(T Value)
         {
-            Node<T> newNode = new Node<T>();
-            newNode.item = item;
-            if (this.Head == null)
+            IEnumerator<int> eN = AllIndexesOf(Value).GetEnumerator();
+            if (eN.MoveNext())
+                return eN.Current;
+
+            return -1;
+        }
+
+        public int LastIndexOf(T Value)
+        {
+            IEnumerator<int> eN = AllIndexesOf(Value).GetEnumerator();
+            int Result = -1;
+            while (eN.MoveNext())
+                Result = eN.Current;
+
+            return Result;
+        }
+
+        public void RemoveAll(Func<T, bool> match)
+        {
+            while (headNode != null && match(headNode.data)) //  head node
             {
-                this.Head = newNode;
+                headNode = headNode.next;
+                count--;
             }
-            else
+            if (headNode != null)
             {
-                Node<T> temp = this.Head;
-                while (temp.next != null)
+                Node<T> nTemp = headNode;
+                while (nTemp.next != null)// other nodes
                 {
-                    temp = temp.next;
+                    if (match(nTemp.next.data))
+                    {
+                        nTemp.next = nTemp.next.next;
+                        count--;
+                    }
+                    else
+                        nTemp = nTemp.next;
                 }
-                temp.next = newNode;
             }
         }
 
-        public void DeleteNode(T item)
+        public IEnumerable<T> Find(Predicate<T> match)
         {
-            if (this.Head.item.Equals(item))
-                Head = Head.next;
-            else
+            foreach (Node<T> item in Nodes)
             {
-                Node<T> temp = Head;
-                Node<T> tempPre = Head;
-                bool matched = false;
-                while (!(matched = temp.item.Equals(item)) && temp.next != null)
-                {
-                    tempPre = temp;
-                    temp = temp.next;
-                }
-                if (matched)
-                    tempPre.next = temp.next;
+                if (match(item.data))
+                    yield return item.data;
+            }
+        }
+
+        public void Reverse()
+        {
+            Node<T> nCurrent = headNode;
+            Node<T> nBack = null;
+            while (nCurrent != null)
+            {
+                Node<T> nTemp = nCurrent.next;
+                nCurrent.next = nBack;
+                nBack = nCurrent;
+                nCurrent = nTemp;
+            }
+            headNode = nBack;
+        }
+
+        public void RemoveFirst()
+        {
+
+            if (headNode != null)
+            {
+                headNode = headNode.next;
+                count--;
+            }
+        }
+
+        public void RemoveLast()
+        {
+            if (headNode != null)
+            {
+                if (headNode.next == null)
+                    headNode = null;
                 else
-                    Console.WriteLine("Value not found!");
+                    NodeAt(Count - 2).next = null;
+
+                count--;
             }
         }
 
-        public bool SearchNode(T item)
+        public void AddLast(T item)
         {
-            Node<T> temp = this.Head;
-            bool matched = false;
-            while (!(matched = temp.item.Equals(item)) && temp.next != null)
-                temp = temp.next;
-            return matched;
+            Node<T> NewNode = new Node<T>() { data = item, next = null };
+            if (headNode == null)
+                headNode = NewNode;
+            else
+                NodeAt(Count - 1).next = NewNode;
 
+            count++;
         }
-        public void DisplayList()
+
+        public void Insert(T item, int index)
         {
-            Console.WriteLine("Displaying List!");
-            Node<T> temp = this.Head;
-            while (temp != null)
+            if (index < 0 || index + 1 > count)
+                throw new IndexOutOfRangeException("Index");
+
+            Node<T> NewNode = new Node<T>() { data = item, next = null };
+            if (index == 0)
             {
-                Console.WriteLine(temp.item);
-                temp = temp.next;
+                NewNode.next = headNode;
+                headNode = NewNode;
             }
+            else
+            {
+                NewNode.next = NodeAt(index - 1).next;
+                NodeAt(index - 1).next = NewNode;
+            }
+            count++;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index < 0 || index + 1 > count)
+                throw new IndexOutOfRangeException("Index");
+
+            if (index == 0)
+            {
+                headNode = headNode.next;
+            }
+            else
+            {
+                Node<T> temp = NodeAt(index - 1);
+                temp.next = temp.next.next;
+            }
+            count--;
+        }
+
+        public void RemoveRange(int index, int count)
+        {
+            if (index < 0 || index + count > this.count)
+                throw new IndexOutOfRangeException("Index");
+
+            if (index == 0)
+            {
+                for (int i = 0; i < count; i++)
+                    headNode = headNode.next;
+            }
+            else
+            {
+                Node<T> nStart = NodeAt(index - 1);
+                for (int i = 0; i < count; i++)
+                    nStart.next = nStart.next == null ? null : nStart.next.next;
+            }
+            this.count -= count;
         }
     }
 }
