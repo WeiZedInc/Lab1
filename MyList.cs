@@ -12,24 +12,46 @@ namespace Lab1
         T[] array = new T[1]; //list based on generic array
         int index = -1; 
 
-        public void Clear() //метод очистки массива и обнуления всех счетчиков
+        public void Clear() 
         {
             array = new T[1];
             count = 0;
             index = -1;
         }
-
-        public bool Contains(T item) //метод поиска элемента в массиве
+        
+        public T Min() 
         {
-            foreach (T val in array)
+            dynamic smallest = array[0];
+            for (int i = 0; i < count; i++)
             {
-                if (val.Equals(item))
+                if (array[i] < smallest)
+                    smallest = array[i];
+            }
+            return smallest;
+        }
+
+        public T Max()
+        {
+            dynamic largest = array[count];
+            for (int i = 0; i < count; i++)
+            {
+                if (array[i] > largest)
+                    largest = array[i];
+            }
+            return largest;
+        }
+
+        public bool Contains(T value) 
+        {
+            foreach (T elment in array)
+            {
+                if (elment.Equals(value))
                     return true;
             }
             return false;
         }
 
-        public void Add(T mass) //метод добавления в массив элемента
+        public void Add(T mass) 
         {
             count++;  
             Array.Resize(ref this.array, count);
@@ -92,9 +114,6 @@ namespace Lab1
             }
         }
 
-        /// <summary>
-        /// Quicksort.
-        /// </summary>
         /// <param name="lastIndex">lastIndex = (Count of all elements in list) - 1</param>
         /// <param name="startInd">startIndex = 0</param>
         public void QuickSort(int lastIndex, int startInd = 0)
@@ -126,6 +145,9 @@ namespace Lab1
                 QuickSort(i, lastIndex);
         }
 
+        /// <param name="left">left = 0</param>
+        /// <param name="right">right = (Count of all elements in list) - 1</param>
+        /// <param name="array">array = default</param>
         public void SortMergeArr(int left, int right, dynamic array = default)
         {
             array = this.array;
@@ -162,6 +184,75 @@ namespace Lab1
                 array[k++] = leftTempArray[i++];
             while (j < rightArrayLength)
                 array[k++] = rightTempArray[j++];
+        }
+
+        public void CombSort()
+        {
+            int arrayLength = count;
+            int currentStep = arrayLength - 1;
+            dynamic? value;
+
+            while (currentStep > 1)
+            {
+                for (int i = 0; i + currentStep < array.Length; i++)
+                {
+                    value = array[i];
+                    if (value > array[i + currentStep])
+                    {
+                        Swap(ref array[i], ref array[i + currentStep]);
+                    }
+                }
+                currentStep = GetNextStep(currentStep);
+            }
+
+            //bubble sort
+            for (int i = 1; i < arrayLength; i++)
+            {
+                bool swapFlag = false;
+                for (int j = 0; j < arrayLength - i; j++)
+                {
+                    value = array[j];
+                    if (value > array[j + 1])
+                    {
+                        Swap(ref array[j], ref array[j + 1]);
+                        swapFlag = true;
+                    }
+                }
+
+                if (!swapFlag)
+                    break;
+            }
+        }
+        int GetNextStep(int step)
+        {
+            step = step * 1000 / 1247;
+            return step > 1 ? step : 1;
+        }
+        void Swap(ref T value1, ref T value2)
+        {
+            dynamic temp = value1;
+            value1 = value2;
+            value2 = temp;
+        }
+
+        public void CountingSort()
+        {
+            dynamic minVal = array.Min();
+            dynamic[] sortedArray = new dynamic[array.Length];
+            int[] counts = new int[array.Max() - minVal + 1];
+
+            for (int i = 0; i < array.Length; i++)
+                counts[array[i] - minVal]++;
+            counts[0]--;
+
+            for (int i = 1; i < counts.Length; i++)
+                counts[i] = counts[i] + counts[i - 1];
+
+            for (int i = array.Length - 1; i >= 0; i--)
+                sortedArray[counts[array[i] - minVal]--] = array[i];
+
+            for (int i = 0; i < count; i++)
+                array[i] = sortedArray[i];
         }
         #endregion
     }

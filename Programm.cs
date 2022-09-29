@@ -24,7 +24,7 @@ static class Programm
         myList.Add(22);
         myList.Add(245);
         myList.Add(11);
-        myList.SortMergeArr(0,myList.Count-1);
+        myList.CountingSort();
         foreach (var item in myList)
             Console.WriteLine(item);
     }
