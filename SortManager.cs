@@ -1,4 +1,5 @@
 ﻿using Lab1;
+using System.Collections.Generic;
 using System.Drawing;
 
 static class SortManager
@@ -51,7 +52,7 @@ static class SortManager
 
         dynamic arr;
         Type type;
-        ChooseType(out type, out arr, ref size);
+        ChooseTypeForArray(out type, out arr, ref size);
 
 
         Console.Clear();
@@ -59,32 +60,69 @@ static class SortManager
 
 
         Console.WriteLine($"Please, enter numbers to fill the array.");
-        if (!FillCollection(arr, type, size))
+        if (!FillArray(arr, type, ref size))
             return;
 
-        SortedArrayOutput(arr);
+        SortedCollectionOutput(arr);
     }
-
     static void ListsSorting()
     {
+        dynamic list;
+        Type type;
+        ChooseTypeForList(out type, out list);
 
+
+        Console.Clear();
+        Console.WriteLine($"Created custom list of type [{type.Name}]");
+
+
+        Console.WriteLine($"Please, enter numbers to fill the list.");
+        if (!FillList(list, type))
+            return;
+
+        SortedCollectionOutput(list);
     }
-
     static void LinkedListsSorting()
     {
+        dynamic list;
+        Type type;
+        ChooseTypeForLinkedList(out type, out list);
 
+
+        Console.Clear();
+        Console.WriteLine($"Created custom LinkedList of type [{type.Name}]");
+
+
+        Console.WriteLine($"Please, enter numbers to fill the LinkedList.");
+        if (!FillLinkedList(list, type))
+            return;
+
+        SortedCollectionOutput(list);
     }
 
-    static bool FillCollection(dynamic collection, Type type, int size)
+    static bool FillArray(dynamic collection, Type type, ref int size)
     {
-        Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
+        bool isWhiteSpaceSeparator = false;
+        string format = null;
+        if (type.Name == "Double" || type.Name == "Single")
+            isWhiteSpaceSeparator = true;
+
+        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
+        Console.WriteLine($"Input values of which array contains using {format}:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
         {
             Console.WriteLine("Try next time to input some values...");
             return false;
         }
-        string[] cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
+
+        string[] cuttedValues;
+        if (isWhiteSpaceSeparator)
+            cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
+        else
+            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
+        cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
+
 
         switch (type.Name)
         {
@@ -159,80 +197,203 @@ static class SortManager
         }
         return true;
     }
-
-    static void SortedArrayOutput(dynamic arr)
+    static bool FillList(dynamic collection, Type type)
     {
-        Console.Clear();
-        Console.WriteLine("Array filled up!");
-        Console.WriteLine("We are almost done!\n");
-        Console.WriteLine("Now choose the sorting method:");
-        Console.WriteLine("1.Insertion sort");
-        Console.WriteLine("2.Quick sort");
-        Console.WriteLine("3.Merge sort");
-        Console.WriteLine("4.Comb sort");
-        Console.WriteLine("5.Counting sort");
-        Console.WriteLine("6.Radix sort");
-        Console.WriteLine("7.Bucket sort");
-        switch (Console.ReadLine())
+        bool isWhiteSpaceSeparator = false;
+        string format = null;
+        if (type.Name == "Double" || type.Name == "Single")
+            isWhiteSpaceSeparator = true;
+
+        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
+        Console.WriteLine($"Input values of which array contains using {format}:");
+        string inputValues = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputValues))
         {
-            case "1":
-                arr.InsertionSort();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            Console.WriteLine("Try next time to input some values...");
+            return false;
+        }
+
+        string[] cuttedValues;
+        if (isWhiteSpaceSeparator)
+            cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
+        else
+            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
+            cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
+
+        switch (type.Name)
+        {
+            case "Int32":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!int.TryParse(cuttedValues[i], out int newInt))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be integer");
+                        continue;
+                    }
+                    collection.Add(newInt);
+                }
                 break;
-            case "2":
-                arr.QuickSort(arr.Count - 1);
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            case "Double":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!double.TryParse(cuttedValues[i], out double newDouble))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be double");
+                        continue;
+                    }
+                    collection.Add(newDouble);
+                }
                 break;
-            case "3":
-                arr.SortMergeArr();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            case "Single":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!float.TryParse(cuttedValues[i], out float newFloat))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be float");
+                        continue;
+                    }
+                    collection.Add(newFloat);
+                }
                 break;
-            case "4":
-                arr.CombSort();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            case "Int16":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!short.TryParse(cuttedValues[i], out short newShort))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be short");
+                        continue;
+                    }
+                    collection.Add(newShort);
+                }
                 break;
-            case "5":
-                arr.CountingSort();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            case "UInt16":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!ushort.TryParse(cuttedValues[i], out ushort newUshort))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be ushort");
+                        continue;
+                    }
+                    collection.Add(newUshort);
+                }
                 break;
-            case "6":
-                arr.RadixSort();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
-                break;
-            case "7":
-                arr.BucketSort();
-                Console.WriteLine("Sorted array is:");
-                foreach (var num in arr)
-                    Console.Write(" " + num);
-                Console.WriteLine();
+            case "UInt32":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!uint.TryParse(cuttedValues[i], out uint newUint))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be uint");
+                        continue;
+                    }
+                    collection.Add(newUint);
+                }
                 break;
             default:
-                Console.WriteLine("Incorrect input.");
-                return;
+                break;
         }
+        return true;
+    }
+    static bool FillLinkedList(dynamic collection, Type type)
+    {
+        bool isWhiteSpaceSeparator = false;
+        string format = null;
+        if (type.Name == "Double" || type.Name == "Single")
+            isWhiteSpaceSeparator = true;
+
+        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
+        Console.WriteLine($"Input values of which array contains using {format}:");
+        string inputValues = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputValues))
+        {
+            Console.WriteLine("Try next time to input some values...");
+            return false;
+        }
+
+        string[] cuttedValues;
+        if (isWhiteSpaceSeparator)
+            cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
+        else
+            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
+        cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
+
+
+        switch (type.Name)
+        {
+            case "Int32":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!int.TryParse(cuttedValues[i], out int newInt))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be integer");
+                        continue;
+                    }
+                    collection.AddLast(newInt);
+                }
+                break;
+            case "Double":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!double.TryParse(cuttedValues[i], out double newDouble))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be double");
+                        continue;
+                    }
+                    collection.AddLast(newDouble);
+                }
+                break;
+            case "Single":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!float.TryParse(cuttedValues[i], out float newFloat))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be float");
+                        continue;
+                    }
+                    collection.AddLast(newFloat);
+                }
+                break;
+            case "Int16":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!short.TryParse(cuttedValues[i], out short newShort))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be short");
+                        continue;
+                    }
+                    collection.AddLast(newShort);
+                }
+                break;
+            case "UInt16":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!ushort.TryParse(cuttedValues[i], out ushort newUshort))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be ushort");
+                        continue;
+                    }
+                    collection.AddLast(newUshort);
+                }
+                break;
+            case "UInt32":
+                for (int i = 0; i < cuttedValues.Length; i++)
+                {
+                    if (!uint.TryParse(cuttedValues[i], out uint newUint))
+                    {
+                        Console.WriteLine(cuttedValues[i] + " - cannot be uint");
+                        continue;
+                    }
+                    collection.AddLast(newUint);
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
-    static void ChooseType(out Type type, out dynamic arr, ref int size)
+    static void ChooseTypeForArray(out Type type, out dynamic collection, ref int size)
     {
-        Console.WriteLine("Choose type of the array");
+        Console.WriteLine("Choose type for Array");
         Console.WriteLine("1.int");
         Console.WriteLine("2.double");
         Console.WriteLine("3.float");
@@ -242,34 +403,197 @@ static class SortManager
         switch (Console.ReadLine())
         {
             case "1":
-                arr = new MyArray<int>(size);
+                collection = new MyArray<int>(size);
                 type = typeof(int);
                 break;
             case "2":
-                arr = new MyArray<double>(size);
+                collection = new MyArray<double>(size);
                 type = typeof(double);
                 break;
             case "3":
-                arr = new MyArray<float>(size);
+                collection = new MyArray<float>(size);
                 type = typeof(float);
                 break;
             case "4":
-                arr = new MyArray<short>(size);
+                collection = new MyArray<short>(size);
                 type = typeof(short);
                 break;
             case "5":
-                arr = new MyArray<ushort>(size);
+                collection = new MyArray<ushort>(size);
                 type = typeof(ushort);
                 break;
             case "6":
-                arr = new MyArray<uint>(size);
+                collection = new MyArray<uint>(size);
                 type = typeof(uint);
                 break;
             default:
                 Console.WriteLine("Incorrect input.");
                 type = null;
-                arr = null;
+                collection = null;
                 break;
+        }
+    }
+    static void ChooseTypeForList(out Type type, out dynamic collection)
+    {
+        Console.WriteLine("Choose type for List");
+        Console.WriteLine("1.int");
+        Console.WriteLine("2.double");
+        Console.WriteLine("3.float");
+        Console.WriteLine("4.short");
+        Console.WriteLine("5.ushort");
+        Console.WriteLine("6.uint");
+        switch (Console.ReadLine())
+        {
+            case "1":
+                collection = new MyList<int>();
+                type = typeof(int);
+                break;
+            case "2":
+                collection = new MyList<double>();
+                type = typeof(double);
+                break;
+            case "3":
+                collection = new MyList<float>();
+                type = typeof(float);
+                break;
+            case "4":
+                collection = new MyList<short>();
+                type = typeof(short);
+                break;
+            case "5":
+                collection = new MyList<ushort>();
+                type = typeof(ushort);
+                break;
+            case "6":
+                collection = new MyList<uint>();
+                type = typeof(uint);
+                break;
+            default:
+                Console.WriteLine("Incorrect input.");
+                type = null;
+                collection = null;
+                break;
+        }
+    }
+    static void ChooseTypeForLinkedList(out Type type, out dynamic collection)
+    {
+        Console.WriteLine("Choose type for LinkedList");
+        Console.WriteLine("1.int");
+        Console.WriteLine("2.double");
+        Console.WriteLine("3.float");
+        Console.WriteLine("4.short");
+        Console.WriteLine("5.ushort");
+        Console.WriteLine("6.uint");
+        switch (Console.ReadLine())
+        {
+            case "1":
+                collection = new MyLinkedList<int>();
+                type = typeof(int);
+                break;
+            case "2":
+                collection = new MyLinkedList<double>();
+                type = typeof(double);
+                break;
+            case "3":
+                collection = new MyLinkedList<float>();
+                type = typeof(float);
+                break;
+            case "4":
+                collection = new MyLinkedList<short>();
+                type = typeof(short);
+                break;
+            case "5":
+                collection = new MyLinkedList<ushort>();
+                type = typeof(ushort);
+                break;
+            case "6":
+                collection = new MyLinkedList<uint>();
+                type = typeof(uint);
+                break;
+            default:
+                Console.WriteLine("Incorrect input.");
+                type = null;
+                collection = null;
+                break;
+        }
+    }
+
+    static void SortedCollectionOutput(dynamic collection)
+    {
+        Console.Clear();
+        Console.WriteLine("Collection filled up!");
+        Console.WriteLine("We are almost done!\n");
+        Console.WriteLine("Now choose the sorting method:");
+        Console.WriteLine("1.Insertion sort");
+        Console.WriteLine("2.Quick sort");
+        Console.WriteLine("3.Merge sort");
+        Console.WriteLine("4.Comb sort");
+        Console.WriteLine("5.Counting sort");
+        Console.WriteLine("6.Radix sort");
+        Console.WriteLine("7.Bucket sort");
+
+        string input = Console.ReadLine();
+        if ("MyLinkedList`1" == collection.GetType().Name) // because of only one sort with linkelist implemented yet
+            input = "3";
+
+        switch (input)
+        {
+            case "1":
+                collection.InsertionSort();
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "2":
+                collection.QuickSort(collection.Count - 1);
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "3":
+                if ("MyLinkedList`1" == collection.GetType().Name)
+                    collection.MergeSort();
+                else
+                    collection.SortMergeArr(0, collection.Count - 1);
+
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "4":
+                collection.CombSort();
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "5":
+                collection.CountingSort();
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "6":
+                collection.RadixSort();
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            case "7":
+                collection.BucketSort();
+                Console.WriteLine("Sorted array is:");
+                foreach (var num in collection)
+                    Console.Write(" " + num);
+                Console.WriteLine();
+                break;
+            default:
+                Console.WriteLine("Incorrect input.");
+                return;
         }
     }
 }

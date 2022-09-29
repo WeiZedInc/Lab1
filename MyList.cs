@@ -167,7 +167,7 @@ namespace Lab1
         /// <param name="left">left = 0</param>
         /// <param name="right">right = (Count of all elements in list) - 1</param>
         /// <param name="array">array = default</param>
-        public void SortMergeArr(int left, int right, dynamic array = default)
+        public void SortMergeArr(int left = 0, int right = 0, dynamic array = default)
         {
             array = this.array;
             if (left < right)
