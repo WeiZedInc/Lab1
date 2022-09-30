@@ -1,6 +1,4 @@
 ﻿using Lab1;
-using System.Collections.Generic;
-using System.Drawing;
 
 static class SortManager
 {

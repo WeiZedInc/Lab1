@@ -13,7 +13,7 @@ namespace Lab1
             array = new T[size];
             count = array.Length;
         }
-       
+
         public T Min()
         {
             dynamic smallest = array[0];
@@ -110,7 +110,7 @@ namespace Lab1
         public void QuickSort(int lastIndex, int startInd = 0)
         {
             int i = startInd, j = lastIndex;
-            dynamic flag = array[(startInd + lastIndex)/2];
+            dynamic flag = array[(startInd + lastIndex) / 2];
             while (i <= j)
             {
                 while (array[i] < flag)
@@ -139,63 +139,63 @@ namespace Lab1
         public void CountingSort()
         {
             dynamic minVal = array.Min();
-            dynamic[] sortedArray = new dynamic[array.Length];
-            int[] counts = new int[array.Max() - minVal + 1];
+            dynamic sortedArray = new T[array.Length];
+            int[] counts = new int[(int)(array.Max() - minVal + 1)];
 
             for (int i = 0; i < array.Length; i++)
-                counts[array[i] - minVal]++;
+                counts[(int)(array[i] - minVal)]++;
             counts[0]--;
 
             for (int i = 1; i < counts.Length; i++)
                 counts[i] = counts[i] + counts[i - 1];
 
             for (int i = array.Length - 1; i >= 0; i--)
-                sortedArray[counts[array[i] - minVal]--] = array[i];
+                sortedArray[counts[(int)(array[i] - minVal)]--] = array[i];
 
-            for (int i = array.Length - 1; i >= 0; i--)
+            for (int i = 0; i < count; i++)
                 array[i] = sortedArray[i];
         }
 
 
         /// <param name="left">left = 0</param>
         /// <param name="right">right = (Count of all elements in list) - 1</param>
-        /// <param name="array">array = default</param>
-        public void SortMergeArr(int left=0, int right=0, dynamic array = default)
+        /// <param name="arr">array = default</param>
+        public void SortMergeArr(int left = 0, int right = 0, T[] arr = default)
         {
-            array = this.array;
+            arr = this.array;
             if (left < right)
             {
-                int middle = left + (right - left) / 2;
-                SortMergeArr(left, middle, array);
-                SortMergeArr(middle + 1, right, array);
-                MergeArr(array, left, middle, right);
+                var middle = left + (right - left) / 2;
+                SortMergeArr(left, middle, arr);
+                SortMergeArr(middle + 1, right, arr);
+                MergeArr(arr, left, middle, right);
             }
         }
-        void MergeArr(int[] array, int left, int middle, int right)
+        void MergeArr(T[] arr, int left, int middle, int right)
         {
             var leftArrayLength = middle - left + 1;
             var rightArrayLength = right - middle;
-            dynamic leftTempArray = new int[leftArrayLength];
-            dynamic rightTempArray = new int[rightArrayLength];
+            dynamic leftTempArray = new T[leftArrayLength];
+            dynamic rightTempArray = new T[rightArrayLength];
             int i, j;
             for (i = 0; i < leftArrayLength; ++i)
-                leftTempArray[i] = array[left + i];
+                leftTempArray[i] = arr[left + i];
             for (j = 0; j < rightArrayLength; ++j)
-                rightTempArray[j] = array[middle + 1 + j];
+                rightTempArray[j] = arr[middle + 1 + j];
             i = 0;
             j = 0;
             int k = left;
             while (i < leftArrayLength && j < rightArrayLength)
             {
                 if (leftTempArray[i] <= rightTempArray[j])
-                    array[k++] = leftTempArray[i++];
+                    arr[k++] = leftTempArray[i++];
                 else
-                    array[k++] = rightTempArray[j++];
+                    arr[k++] = rightTempArray[j++];
             }
             while (i < leftArrayLength)
-                array[k++] = leftTempArray[i++];
+                arr[k++] = leftTempArray[i++];
             while (j < rightArrayLength)
-                array[k++] = rightTempArray[j++];
+                arr[k++] = rightTempArray[j++];
         }
 
 
@@ -253,7 +253,7 @@ namespace Lab1
         public void RadixSort()
         {
             // our helper array 
-            dynamic[] t = new dynamic[array.Length];
+            dynamic t = new T[array.Length];
 
             // number of bits our group will be long 
             int r = 4; // try to set this also to 2, 8 or 16 to see if it is 
@@ -286,7 +286,7 @@ namespace Lab1
                 for (int i = 0; i < array.Length; i++)
                 {
                     value = array[i];
-                    count[(value >> shift) & mask]++;
+                    count[((int)value >> shift) & mask]++;
                 }
 
                 // calculating prefixes 
@@ -298,7 +298,7 @@ namespace Lab1
                 for (int i = 0; i < array.Length; i++)
                 {
                     value = array[i];
-                    t[pref[(value >> shift) & mask]++] = array[i];
+                    t[pref[((int)value >> shift) & mask]++] = array[i];
                 }
 
                 // a[]=t[] and start again until the last group 
@@ -315,13 +315,13 @@ namespace Lab1
             dynamic maxValue = array.Max();
             dynamic minValue = array.Min();
 
-            LinkedList<T>[] bucket = new LinkedList<T>[maxValue - minValue + 1];
+            LinkedList<T>[] bucket = new LinkedList<T>[(int)(maxValue - minValue + 1)];
             for (int i = 0; i < array.Length; i++)
             {
-                if (bucket[array[i] - minValue] == null)
-                    bucket[array[i] - minValue] = new LinkedList<T>();
+                if (bucket[(int)(array[i] - minValue)] == null)
+                    bucket[(int)(array[i] - minValue)] = new LinkedList<T>();
 
-                bucket[array[i] - minValue].AddLast(array[i]);
+                bucket[(int)(array[i] - minValue)].AddLast(array[i]);
             }
             var index = 0;
 
