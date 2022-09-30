@@ -10,6 +10,7 @@ namespace Lab1
         public int Count { get => count; } // array size
 
         T[] array = new T[1]; //list based on generic array
+        public T[] Array { get => array; } // array size
         int index = -1; 
 
         public void Clear() 
@@ -53,8 +54,8 @@ namespace Lab1
 
         public void Add(T mass) 
         {
-            count++;  
-            Array.Resize(ref this.array, count);
+            count++;
+            System.Array.Resize(ref this.array, count);
             index++; 
             this.array[index] = mass; 
         }
@@ -86,82 +87,6 @@ namespace Lab1
         #endregion
 
         #region Sorting
-        public void InsertionSort()
-        {
-            int i, flag, arrSize = Count;
-            dynamic operatingValue;
-
-            for (i = 1; i < arrSize; i++)
-            {
-                operatingValue = array[i];
-                if (operatingValue is null) break;
-
-                flag = 0;
-                for (int j = i - 1; j >= 0 && flag != 1;)
-                {
-                    if (operatingValue < array[j])
-                    {
-                        array[j + 1] = array[j];
-                        j--;
-                        array[j + 1] = operatingValue;
-                    }
-                    else
-                    {
-                        flag = 1;
-                    }
-                }
-            }
-        }
-
-
-        public void QuickSort(int lastIndex, int startInd = 0)
-        {
-            int i = startInd, j = lastIndex;
-            dynamic flag = array[(startInd + lastIndex) / 2];
-            while (i <= j)
-            {
-                while (array[i] < flag)
-                    i++;
-
-                while (array[j] > flag)
-                    j--;
-
-                if (i <= j)
-                {
-                    dynamic val = array[i];
-                    array[i] = array[j];
-                    array[j] = val;
-                    i++;
-                    j--;
-                }
-            }
-
-            if (startInd < j)
-                QuickSort(startInd, j);
-            if (i < lastIndex)
-                QuickSort(i, lastIndex);
-        }
-
-
-        public void CountingSort()
-        {
-            dynamic minVal = array.Min();
-            dynamic sortedArray = new T[array.Length];
-            int[] counts = new int[(int)(array.Max() - minVal + 1)];
-
-            for (int i = 0; i < array.Length; i++)
-                counts[(int)(array[i] - minVal)]++;
-            counts[0]--;
-
-            for (int i = 1; i < counts.Length; i++)
-                counts[i] = counts[i] + counts[i - 1];
-
-            for (int i = array.Length - 1; i >= 0; i--)
-                sortedArray[counts[(int)(array[i] - minVal)]--] = array[i];
-
-            for (int i = 0; i < count; i++)
-                array[i] = sortedArray[i];
-        }
 
 
         /// <param name="left">left = 0</param>
