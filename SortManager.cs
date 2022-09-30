@@ -534,53 +534,49 @@ static class SortManager
         switch (input)
         {
             case "1":
-                collection.InsertionSort();
+                collection.InsertionSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "2":
-                collection.QuickSort(collection.Count - 1);
+                collection.QuickSortGeneric(collection.Count - 1);
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "3":
-                if ("MyLinkedList`1" == collection.GetType().Name)
-                    collection.MergeSort();
-                else
-                    collection.SortMergeArr(0, collection.Count - 1);
-
+                 collection.MergeSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "4":
-                collection.CombSort();
+                collection.CombSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "5":
-                collection.CountingSort();
+                collection.CountingSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "6":
-                collection.RadixSort();
+                collection.RadixSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
             case "7":
-                collection.BucketSort();
+                collection.BucketSortGeneric();
                 Console.WriteLine("Sorted array is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);

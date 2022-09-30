@@ -11,40 +11,13 @@
  */
 
 using Lab1;
-using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 static class Programm
 {
     static void Main(string[] args)
     {
-        MyList<double> list = new MyList<double>();
-        list.Add(1);
-        list.Add(0.1f);
-        list.Add(-1.223f);
-        list.Add(-4);
-        list.Add(32.2);
-        list.RadixSortGeneric();
-        for (int i = 0; i < list.Count; i++)
-        {
-            Console.WriteLine(list[i]);
-        }
-        Console.WriteLine();
-
-        MyArray<double> array = new MyArray<double>(5);
-        array[0] = 1.11;
-        array[1] = -2.1f;
-        array[2] = 0.11;
-        array[3] = 22;
-        array[4] = -4;
-        array.RadixSortGeneric();
-        for (int i = 0; i < array.Count; i++)
-        {
-            Console.WriteLine(array[i]);
-        }
-
-        // combsort troubles
-        // bucket troubles
-        // SortManager.SortMenuSwitcher();
+        SortManager.SortMenuSwitcher();
     }
 
     static void MainMenu()

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using System.Security.AccessControl;
-using System.Text;
 
 namespace Lab1
 {
@@ -180,21 +177,26 @@ namespace Lab1
 
         public static void CombSortGeneric<T>(this T myClass)
         {
+            Console.WriteLine("Comb sort no implemented yet.");
+            return;
+
             if (CheckForCorrectClass(myClass) == false) return;
             dynamic dynamicT = myClass;
-            dynamic array = dynamicT.Array;
 
-            int arrayLength = array.Length;
+            dynamic arr = dynamicT.Array; 
+            int arrayLength = arr.Length;
             int currentStep = arrayLength - 1;
-            dynamic? value;
+            dynamic value;
 
             while (currentStep > 1)
             {
-                for (int i = 0; i + currentStep < array.Length; i++)
+                for (int i = 0; i + currentStep < arr.Length; i++)
                 {
-                    value = array[i];
-                    if (value > array[i + currentStep])
-                        Swap(ref array[i], ref array[i + currentStep]);
+                    value = arr[i];
+                    if (value > arr[i + currentStep])
+                    {
+                        Swap( arr[i], arr[i + currentStep]);
+                    }
                 }
                 currentStep = GetNextStep(currentStep);
             }
@@ -205,10 +207,10 @@ namespace Lab1
                 bool swapFlag = false;
                 for (int j = 0; j < arrayLength - i; j++)
                 {
-                    value = array[j];
-                    if (value > array[j + 1])
+                    value = arr[j];
+                    if (value > arr[j + 1])
                     {
-                        Swap(ref array[j], ref array[j + 1]);
+                        Swap(arr[j], arr[j + 1]);
                         swapFlag = true;
                     }
                 }
@@ -216,15 +218,16 @@ namespace Lab1
                 if (!swapFlag)
                     break;
             }
+            dynamicT.Array = arr;
         }
         static int GetNextStep(int step)
         {
             step = step * 1000 / 1247;
             return step > 1 ? step : 1;
         }
-        static void Swap(ref dynamic value1, ref dynamic value2)
+        static void Swap<T>( T value1,  T value2)
         {
-            dynamic temp = value1;
+            T temp = value1;
             value1 = value2;
             value2 = temp;
         }
@@ -242,11 +245,11 @@ namespace Lab1
             dynamic maxValue = Max(array);
             dynamic minValue = Min(array);
 
-            LinkedList<T>[] bucket = new LinkedList<T>[(int)(maxValue - minValue + 1)];
+            var bucket = new LinkedList<dynamic>[(int)(maxValue - minValue + 1)];
             for (int i = 0; i < array.Length; i++)
             {
                 if (bucket[(int)(array[i] - minValue)] == null)
-                    bucket[(int)(array[i] - minValue)] = new LinkedList<T>();
+                    bucket[(int)(array[i] - minValue)] = new LinkedList<dynamic>();
 
                 bucket[(int)(array[i] - minValue)].AddLast(array[i]);
             }
@@ -256,7 +259,7 @@ namespace Lab1
             {
                 if (bucket[i] != null)
                 {
-                    LinkedListNode<T> node = bucket[i].First;
+                    LinkedListNode<dynamic> node = bucket[i].First;
                     while (node != null)
                     {
                         array[index] = node.Value;
