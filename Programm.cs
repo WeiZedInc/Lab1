@@ -17,37 +17,38 @@ static class Programm
 {
     static void Main(string[] args)
     {
-        MyList<double> list = new MyList<double>();
-        list.Add(1);
-        list.Add(0.1f);
-        list.Add(-1.223f);
-        list.Add(-4);
-        list.Add(32.2);
-        list.BucketSort();
-        for (int i = 0; i < list.Count; i++)
-        {
-            Console.WriteLine(list[i]);
-        }
-        Console.WriteLine();
+        //MyList<double> list = new MyList<double>();
+        //list.Add(1);
+        //list.Add(0.1f);
+        //list.Add(-1.223f);
+        //list.Add(-4);
+        //list.Add(32.2);
+        //list.BucketSort();
+        //for (int i = 0; i < list.Count; i++)
+        //{
+        //    Console.WriteLine(list[i]);
+        //}
+        //Console.WriteLine();
 
-        MyArray<double> array = new MyArray<double>(5);
-        array[0] = 1.11;
-        array[1] = -2.1f;
-        array[2] = 0.11;
-        array[3] = 22;
-        array[4] = -4;
-        array.BucketSort();
-        for (int i = 0; i < array.Count; i++)
-        {
-            Console.WriteLine(array[i]);
-        }
-        // comb sort works with doubles, ints
-        // insertion sort works with doubles, ints
-        // quick sort works with doubles, ints
-        // merge sort works with doubles, ints
-        // counting sort works with doubles, ints 
-        // radix sort works with doubles, ints 
-        // bucket sort works with doubles, ints 
+        //MyArray<double> array = new MyArray<double>(5);
+        //array[0] = 1.11;
+        //array[1] = -2.1f;
+        //array[2] = 0.11;
+        //array[3] = 22;
+        //array[4] = -4;
+        //array.BucketSort();
+        //for (int i = 0; i < array.Count; i++)
+        //{
+        //    Console.WriteLine(array[i]);
+        //}
+        //// comb sort works with doubles, ints
+        //// insertion sort works with doubles, ints
+        //// quick sort works with doubles, ints
+        //// merge sort works with doubles, ints
+        //// counting sort works with doubles, ints 
+        //// radix sort works with doubles, ints 
+        //// bucket sort works with doubles, ints 
+        SortManager.SortMenuSwitcher();
     }
 
     static void MainMenu()

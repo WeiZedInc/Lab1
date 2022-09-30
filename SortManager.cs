@@ -42,7 +42,7 @@ static class SortManager
     static void ArraysSorting()
     {
         Console.WriteLine("Enter size of the array:");
-        if (!int.TryParse(Console.ReadLine(),out int size))
+        if (!int.TryParse(Console.ReadLine(), out int size))
         {
             Console.WriteLine("Incorrect input.");
             return;
@@ -60,6 +60,11 @@ static class SortManager
         Console.WriteLine($"Please, enter numbers to fill the array.");
         if (!FillArray(arr, type, ref size))
             return;
+
+        Console.Clear();
+        Console.WriteLine("Entered numbers are:");
+        foreach (var item in arr)
+            Console.Write(" " + item);
 
         SortedCollectionOutput(arr);
     }
@@ -101,11 +106,10 @@ static class SortManager
     static bool FillArray(dynamic collection, Type type, ref int size)
     {
         bool isWhiteSpaceSeparator = false;
-        string format = null;
         if (type.Name == "Double" || type.Name == "Single")
             isWhiteSpaceSeparator = true;
-
-        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
+        
+        string format = isWhiteSpaceSeparator ? "WHITESPACE separator, example [23,4 -23,431 0,13f]" : "',' or whitespace or ';' separators";
         Console.WriteLine($"Input values of which array contains using {format}:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
@@ -118,9 +122,7 @@ static class SortManager
         if (isWhiteSpaceSeparator)
             cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
         else
-            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
-        cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
-
+            cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
 
         switch (type.Name)
         {
@@ -198,12 +200,11 @@ static class SortManager
     static bool FillList(dynamic collection, Type type)
     {
         bool isWhiteSpaceSeparator = false;
-        string format = null;
         if (type.Name == "Double" || type.Name == "Single")
             isWhiteSpaceSeparator = true;
 
-        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
-        Console.WriteLine($"Input values of which array contains using {format}:");
+        string format = isWhiteSpaceSeparator ? "WHITESPACE separator, example [23,4 -23,431 0,13f]" : "',' or whitespace or ';' separators";
+        Console.WriteLine($"Input values of which list contains using {format}:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
         {
@@ -215,7 +216,6 @@ static class SortManager
         if (isWhiteSpaceSeparator)
             cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
         else
-            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
             cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
 
         switch (type.Name)
@@ -294,12 +294,11 @@ static class SortManager
     static bool FillLinkedList(dynamic collection, Type type)
     {
         bool isWhiteSpaceSeparator = false;
-        string format = null;
         if (type.Name == "Double" || type.Name == "Single")
             isWhiteSpaceSeparator = true;
 
-        format = isWhiteSpaceSeparator ? "WHITESPACE separator" : "',' or whitespace or ';' separators";
-        Console.WriteLine($"Input values of which array contains using {format}:");
+        string format = isWhiteSpaceSeparator ? "WHITESPACE separator, example [23,4 -23,431 0,13f]" : "',' or whitespace or ';' separators";
+        Console.WriteLine($"Input values of which linkedlist contains using {format}:");
         string inputValues = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(inputValues))
         {
@@ -311,8 +310,7 @@ static class SortManager
         if (isWhiteSpaceSeparator)
             cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
         else
-            Console.WriteLine("Input values of which array contains using ',' or whitespace or ';' separators:");
-        cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
+            cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
 
 
         switch (type.Name)
@@ -518,7 +516,6 @@ static class SortManager
 
     static void SortedCollectionOutput(dynamic collection)
     {
-        Console.Clear();
         Console.WriteLine("Collection filled up!");
         Console.WriteLine("We are almost done!\n");
         Console.WriteLine("Now choose the sorting method:");
