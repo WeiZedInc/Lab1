@@ -23,7 +23,7 @@ static class Programm
         list.Add(-1.223f);
         list.Add(-4);
         list.Add(32.2);
-        list.CountingSortGeneric();
+        list.RadixSortGeneric();
         for (int i = 0; i < list.Count; i++)
         {
             Console.WriteLine(list[i]);
@@ -36,13 +36,14 @@ static class Programm
         array[2] = 0.11;
         array[3] = 22;
         array[4] = -4;
-        array.CountingSortGeneric();
+        array.RadixSortGeneric();
         for (int i = 0; i < array.Count; i++)
         {
             Console.WriteLine(array[i]);
         }
 
-
+        // combsort troubles
+        // bucket troubles
         // SortManager.SortMenuSwitcher();
     }
 
