@@ -1,4 +1,4 @@
-﻿/* Lab1 by Yurii Kyrpotenko PI-23
+/* Lab1 by Yurii Kyrpotenko PI-23
  * 
  * Made 2-nd** ex from the first list (Sort Manager)
  * And
@@ -9,6 +9,8 @@
  * 
  * Made 6* for the 9-th ex, and 3-4* for 2-nd ex
  */
+
+using Lab1.Menu;
 
 static class Programm
 {
