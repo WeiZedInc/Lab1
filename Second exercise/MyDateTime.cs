@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab1
+﻿namespace Lab1
 {
     internal class MyDateTime
     {
@@ -19,14 +12,13 @@ namespace Lab1
             customTimeSpan = new TimeSpan();
         }
 
-        void ShowCurrentTime()
+        public void ShowCurrentTime()
         {
             var currentTime = DateTime.Now;
             Console.WriteLine("Current time: " + currentTime.ToString("\tdddd, dd MMMM yyyy HH:mm:ss"));
             Console.WriteLine("Short variant: \t" + currentTime);
             Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K\n"));
         }
-
         bool ValidateDateTime(bool isFirstTime = true)
         {
             Console.WriteLine("Enter your time...");
@@ -45,7 +37,8 @@ namespace Lab1
             return true;
         }
 
-        void SubtractTime()
+
+        public void SubtractTime()
         {
             if (!ValidateDateTime())
                 return;
@@ -104,8 +97,7 @@ namespace Lab1
                     break;
             }
         }
-
-        void CalculateTime(char symbol)
+        public void CalculateTime(char symbol)
         {
             Console.WriteLine("Do you want to use saved result, or a new one? saved/new");
             float value = 0;
@@ -224,9 +216,8 @@ namespace Lab1
             Console.WriteLine();
         }
 
-        
 
-        void SwitchTimeZones()
+        public void SwitchTimeZones()
         {
             Console.WriteLine("Do you want to see all time zones? y/n \n");
             string timeInput = Console.ReadLine();
@@ -287,8 +278,7 @@ namespace Lab1
                 Console.WriteLine("Wrong input.");
             }
         }
-
-        void FindMostPopularDayOfTheWeek()
+        public void FindMostPopularDayOfTheWeek()
         {
             Console.WriteLine("Please, enter the date range");
             if (!ValidateDateTime() || !ValidateDateTime(false))

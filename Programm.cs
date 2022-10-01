@@ -10,8 +10,7 @@
  * Made 6* for the 9-th ex, and 3-4* for 2-nd ex
  */
 
-using Lab1;
-using System.Runtime.CompilerServices;
+using Lab1.Menu;
 
 static class Programm
 {

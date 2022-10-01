@@ -1,5 +1,4 @@
-﻿using Lab1;
-
+﻿namespace Lab1.Menu;
 static class SortManager
 {
     public static void SortMenuSwitcher()
