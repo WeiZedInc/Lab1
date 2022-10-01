@@ -19,7 +19,7 @@
             Console.WriteLine("Short variant: \t" + currentTime);
             Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K\n"));
         }
-        bool ValidateDateTime(bool isFirstTime = true)
+        public bool ValidateDateTime(bool isFirstTime = true)
         {
             Console.WriteLine("Enter your time...");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime dt))
