@@ -8,7 +8,7 @@ namespace Lab1
         public int Count { get => count; } // array size
 
         T[] array = new T[1]; //list based on generic array
-        public T[] Array { get => array; } // array size
+        public T[] Array { get => array; } 
         int index = -1; 
 
         public void Clear() 

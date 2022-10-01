@@ -17,7 +17,7 @@ static class Programm
 {
     static void Main(string[] args)
     {
-        SortManager.SortMenuSwitcher();
+        MainMenu();
     }
 
     static void MainMenu()

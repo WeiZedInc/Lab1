@@ -66,7 +66,7 @@ static class SortManager
         foreach (var item in arr)
             Console.Write(" " + item);
 
-        SortedCollectionOutput(arr);
+        SortedCollectionOutput(ref arr);
     }
     static void ListsSorting()
     {
@@ -83,7 +83,7 @@ static class SortManager
         if (!FillList(list, type))
             return;
 
-        SortedCollectionOutput(list);
+        SortedCollectionOutput(ref list);
     }
     static void LinkedListsSorting()
     {
@@ -100,7 +100,7 @@ static class SortManager
         if (!FillLinkedList(list, type))
             return;
 
-        SortedCollectionOutput(list);
+        SortedCollectionOutput(ref list);
     }
 
     static bool FillArray(dynamic collection, Type type, ref int size)
@@ -514,7 +514,7 @@ static class SortManager
         }
     }
 
-    static void SortedCollectionOutput(dynamic collection)
+    static void SortedCollectionOutput(ref dynamic collection)
     {
         Console.WriteLine("Collection filled up!");
         Console.WriteLine("We are almost done!\n");

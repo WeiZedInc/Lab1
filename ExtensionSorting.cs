@@ -36,7 +36,6 @@ namespace Lab1
         }
 
 
-
         public static void InsertionSortGeneric<T>(this T myClass)
         {
             if (CheckForCorrectClass(myClass) == false) return;

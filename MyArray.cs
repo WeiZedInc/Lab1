@@ -7,7 +7,7 @@ namespace Lab1
         int count = 0;
         public int Count { get => count; } // array size
         T[] array;
-        public T[] Array { get => array; } // array size
+        public T[] Array { get => array; } 
 
 
         public MyArray(int size = 1)
@@ -80,65 +80,5 @@ namespace Lab1
 
         #endregion
 
-        #region Sorting
-
-        
-
-
-        public void CombSort()
-        {
-            int arrayLength = count;
-            int currentStep = arrayLength - 1;
-            dynamic? value;
-
-            while (currentStep > 1)
-            {
-                for (int i = 0; i + currentStep < array.Length; i++)
-                {
-                    value = array[i];
-                    if (value > array[i + currentStep])
-                    {
-                        Swap(ref array[i], ref array[i + currentStep]);
-                    }
-                }
-                currentStep = GetNextStep(currentStep);
-            }
-
-            //bubble sort
-            for (int i = 1; i < arrayLength; i++)
-            {
-                bool swapFlag = false;
-                for (int j = 0; j < arrayLength - i; j++)
-                {
-                    value = array[j];
-                    if (value > array[j + 1])
-                    {
-                        Swap(ref array[j], ref array[j + 1]);
-                        swapFlag = true;
-                    }
-                }
-
-                if (!swapFlag)
-                    break;
-            }
-        }
-        int GetNextStep(int step)
-        {
-            step = step * 1000 / 1247;
-            return step > 1 ? step : 1;
-        }
-        void Swap(ref T value1, ref T value2)
-        {
-            dynamic temp = value1;
-            value1 = value2;
-            value2 = temp;
-        }
-
-
-       
-
-
-        
-        #endregion
     }
 }
