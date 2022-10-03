@@ -2,7 +2,7 @@
 
 namespace Lab1
 {
-    internal struct MyArray<T> : IEnumerable<T>, IEnumerator<T> //interfaces for loops
+    internal struct MyArray<T> : IEnumerable<T>, IEnumerator<T> //interfaces for loops  
     {
         int count = 0;
         public int Count { get => count; } // array size
@@ -16,7 +16,7 @@ namespace Lab1
             count = array.Length;
         }
 
-        public T Min()
+        public T Min() 
         {
             dynamic smallest = array[0];
             for (int i = 0; i < count; i++)
