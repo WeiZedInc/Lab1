@@ -1,7 +1,7 @@
-﻿using System.Collections;
-
-namespace Lab1.Menu;
-static class SortManager
+﻿using Lab1Core;
+using System;
+using System.Collections;
+public static class SortManager
 {
     public static void SortMenuSwitcher()
     {
@@ -522,10 +522,9 @@ static class SortManager
         Console.WriteLine("1.Insertion sort");
         Console.WriteLine("2.Quick sort");
         Console.WriteLine("3.Merge sort");
-        Console.WriteLine("4.Comb sort");
-        Console.WriteLine("5.Counting sort");
-        Console.WriteLine("6.Radix sort");
-        Console.WriteLine("7.Bucket sort");
+        Console.WriteLine("4.Counting sort");
+        Console.WriteLine("5.Radix sort");
+        Console.WriteLine("6.Bucket sort");
 
         string input = Console.ReadLine();
         if ("MyLinkedList`1" == collection.GetType().Name)
@@ -555,27 +554,20 @@ static class SortManager
                 Console.WriteLine();
                 break;
             case "4":
-                collection.CombSortGeneric();
-                Console.WriteLine("Sorted collection is:");
-                foreach (var num in collection)
-                    Console.Write(" " + num);
-                Console.WriteLine();
-                break;
-            case "5":
                 collection.CountingSortGeneric();
                 Console.WriteLine("Sorted collection is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
-            case "6":
+            case "5":
                 collection.RadixSortGeneric();
                 Console.WriteLine("Sorted collection is:");
                 foreach (var num in collection)
                     Console.Write(" " + num);
                 Console.WriteLine();
                 break;
-            case "7":
+            case "6":
                 collection.BucketSortGeneric();
                 Console.WriteLine("Sorted collection is:");
                 foreach (var num in collection)

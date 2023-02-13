@@ -1,6 +1,8 @@
-﻿namespace Lab1.Menu
+﻿using System;
+
+namespace Lab1Core.Menu
 {
-    internal class TimeManager
+    public class TimeManager
     {
         public static void TimeMenuSwitcher()
         {
