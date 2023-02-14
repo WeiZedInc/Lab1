@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1WPF"
         mc:Ignorable="d"
-        Title="SortManagerWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Sort Manager" Height="450" Width="800">
+    <Grid Background="#FF0F6A88">
+        <Label x:Name="label" Content="Welcome to the Sort Manager" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="MV Boli"/>
     </Grid>
 </Window>

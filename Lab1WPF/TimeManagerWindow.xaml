@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="TimeManagerWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid Background="#FF0F6A88">
+            <Label x:Name="label" Content="Welcome to the Time Manager" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="MV Boli"/>
+        </Grid>
     </Grid>
 </Window>
