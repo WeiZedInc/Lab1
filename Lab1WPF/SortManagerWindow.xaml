@@ -45,8 +45,34 @@
                  VerticalScrollBarVisibility="Auto"
                  TextAlignment="Center"
                  AcceptsReturn="True"/>
-        <Label x:Name="label1" Content="Input values" HorizontalAlignment="Center" Margin="-600,119,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Label x:Name="label1_Copy" Content="Result" HorizontalAlignment="Center" Margin="600,119,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label x:Name="InputLabel" Content="Input values" HorizontalAlignment="Center" Margin="-600,120,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label x:Name="ResultLabel" Content="Result" HorizontalAlignment="Center" Margin="600,120,0,0" VerticalAlignment="Top" FontSize="18"/>
 
+        <Label x:Name="CollectionLabel" Content="Choose collection type" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <ComboBox Name="CollectionType" SelectionChanged="CollectionType_SelectionChanged" Margin="307,219,307,191">
+            <ComboBoxItem Content="Array"/>
+            <ComboBoxItem Content="List"/>
+            <ComboBoxItem Content="LinkedList"/>
+        </ComboBox>
+
+        <Label x:Name="ValueLabel" Content="Choose value type" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="0,119,0,0"/>
+        <ComboBox Name="ValueType" SelectionChanged="ValueType_SelectionChanged" Margin="307,153,307,255">
+            <ComboBoxItem Content="Int"/>
+            <ComboBoxItem Content="Double"/>
+            <ComboBoxItem Content="Float"/>
+            <ComboBoxItem Content="Short"/>
+            <ComboBoxItem Content="Uint"/>
+            <ComboBoxItem Content="Ushort"/>
+        </ComboBox>
+
+        <Label x:Name="SortingLabel" Content="Choose sorting algorithm" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="0,253,0,0"/>
+        <ComboBox Name="SortignAlgorithm" SelectionChanged="SortignAlgorithm_SelectionChanged" Margin="307,287,307,122">
+            <ComboBoxItem Content="Insertion sort"/>
+            <ComboBoxItem Content="Quick sort"/>
+            <ComboBoxItem Content="Merge sort"/>
+            <ComboBoxItem Content="Counting sort"/>
+            <ComboBoxItem Content="Radix sort"/>
+            <ComboBoxItem Content="Bucket sort"/>
+        </ComboBox>
     </Grid>
 </Window>

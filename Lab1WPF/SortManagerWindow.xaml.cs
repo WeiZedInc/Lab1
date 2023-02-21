@@ -18,6 +18,12 @@ namespace Lab1WPF
 
         }
 
+        private void CollectionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
+            //MessageBox.Show("You selected: " + selectedItem.Content);
+        }
+
         private void HowToUseButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Firstly, choose what do You want to sort:\n" +
@@ -35,6 +41,16 @@ namespace Lab1WPF
                 "Afterall input values to the left input box and click Result button.\n\n" +
                 "If You want to sort array of floating values,\nuse the WHITESPACE separator, example [23,4 -23,431 0,13f]\n\n" +
                 "If You want to sort array of integers,\nuse ',' or whitespace or ';' separators", "How to use soting");
+        }
+
+        private void ValueType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SortignAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
