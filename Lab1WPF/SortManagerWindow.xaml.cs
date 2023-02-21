@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Lab1WPF
@@ -8,20 +9,13 @@ namespace Lab1WPF
     /// </summary>
     public partial class SortManagerWindow : Window
     {
+        SortManager sortMngr;
+        string collectionTypeName, valueTypeName, algorithmName;
         public SortManagerWindow()
         {
             InitializeComponent();
-        }
-
-        private void GetResult_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CollectionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
-            //MessageBox.Show("You selected: " + selectedItem.Content);
+            sortMngr = SortManager.Instance;
+            ExecutionTimeLabel.Visibility = Visibility.Hidden;
         }
 
         private void HowToUseButton_Click(object sender, RoutedEventArgs e)
@@ -43,14 +37,27 @@ namespace Lab1WPF
                 "If You want to sort array of integers,\nuse ',' or whitespace or ';' separators", "How to use soting");
         }
 
+
+        private void GetResult_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void CollectionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
+            collectionTypeName = selectedItem.Content.ToString();
+        }
+
         private void ValueType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
+            valueTypeName = selectedItem.Content.ToString();
         }
 
         private void SortignAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
+            algorithmName = selectedItem.Content.ToString();
         }
     }
 }

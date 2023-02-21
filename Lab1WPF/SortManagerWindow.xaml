@@ -74,5 +74,6 @@
             <ComboBoxItem Content="Radix sort"/>
             <ComboBoxItem Content="Bucket sort"/>
         </ComboBox>
+        <Label x:Name="ExecutionTimeLabel" Content="Execution time:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Margin="638,299,0,0"/>
     </Grid>
 </Window>
