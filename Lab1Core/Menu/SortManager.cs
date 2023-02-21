@@ -1,6 +1,7 @@
 ﻿using Lab1Core;
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public sealed class SortManager
@@ -310,7 +311,7 @@ public sealed class SortManager
         }
     }
 
-    public bool CreateFillAndSortArray<T>(string algorithmName, string inputValues = "10 5 2 3")
+    public MyArray<T> CreateFillAndSortArray<T>(string algorithmName, string inputValues = "10 5 2 3")
     {
         Type type = typeof(T);
         bool isWhiteSpaceSeparator = false;
@@ -325,76 +326,64 @@ public sealed class SortManager
             cuttedValues = inputValues.Split(new string[] { " ", ",", ";" }, StringSplitOptions.TrimEntries);
 
         int size = cuttedValues.Length;
-        IEnumerable array = new MyArray<T>(size);
+        MyArray<T> array = new MyArray<T>(size);
 
         switch (type.Name)
         {
             case "Int32":
-                var intArr = new MyArray<int>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!int.TryParse(cuttedValues[i], out int newInt))
                         continue;
-                    intArr[i] = newInt;
+                    array[i] = Unsafe.As<int, T>(ref newInt);
                 }
-                array = intArr;
                 break;
             case "Double":
-                var doubleArr = new MyArray<double>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!double.TryParse(cuttedValues[i], out double newDouble))
                         continue;
-                    doubleArr[i] = newDouble;
+                    array[i] = Unsafe.As<double, T>(ref newDouble);
                 }
-                array = doubleArr;
                 break;
             case "Single":
-                var floatArr = new MyArray<float>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!float.TryParse(cuttedValues[i], out float newFloat))
                         continue;
-                    floatArr[i] = newFloat;
+                    array[i] = Unsafe.As<float, T>(ref newFloat);
                 }
-                array = floatArr;
                 break;
             case "Int16":
-                var shortArr = new MyArray<short>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!short.TryParse(cuttedValues[i], out short newShort))
                         continue;
-                    shortArr[i] = newShort;
+                    array[i] = Unsafe.As<short, T>(ref newShort);
                 }
-                array = shortArr;
                 break;
             case "UInt16":
-                var ushortArr = new MyArray<ushort>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!ushort.TryParse(cuttedValues[i], out ushort newUshort))
                         continue;
-                    ushortArr[i] = newUshort;
+                    array[i] = Unsafe.As<ushort, T>(ref newUshort);
                 }
-                array = ushortArr;
                 break;
             case "UInt32":
-                var uintArr = new MyArray<uint>(size);
                 for (int i = 0; i < size; i++)
                 {
                     if (!uint.TryParse(cuttedValues[i], out uint newUint))
                         continue;
-                    uintArr[i] = newUint;
+                    array[i] = Unsafe.As<uint, T>(ref newUint);
                 }
-                array = uintArr;
                 break;
             default:
                 break;
         }
 
         SortCollection(array, algorithmName);
-        return true;
+        return array;
     }
     void SortCollection(IEnumerable collection, string algorithmName)
     {
