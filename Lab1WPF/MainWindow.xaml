@@ -14,8 +14,20 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="Welcome to the main menu. Please, choose one of the options below." VerticalAlignment="Top" TextAlignment="Center" FontSize="20" UseLayoutRounding="False"/>
-        <Button x:Name="TimeManagerBtn" Content="Time Manager" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="TimeManagerBtn_Click" Background="#FF24B9AF"/>
-        <Button x:Name="SortManagerBtn" Content="Sort Manager" HorizontalAlignment="Left" Margin="480,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="SortManagerBtn_Click" Background="#FF24B9AF"/>
+        <Button x:Name="TimeManagerBtn" Content="Time Manager" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="TimeManagerBtn_Click" Background="#FF24B9AF">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="SortManagerBtn" Content="Sort Manager" HorizontalAlignment="Left" Margin="480,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="SortManagerBtn_Click" Background="#FF24B9AF">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 </Window>
