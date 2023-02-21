@@ -57,12 +57,12 @@
 
         <Label x:Name="ValueLabel" Content="Choose value type" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="0,119,0,0"/>
         <ComboBox Name="ValueType" SelectionChanged="ValueType_SelectionChanged" Margin="307,153,307,255">
-            <ComboBoxItem Content="Int"/>
+            <ComboBoxItem Content="Int32"/>
             <ComboBoxItem Content="Double"/>
-            <ComboBoxItem Content="Float"/>
-            <ComboBoxItem Content="Short"/>
-            <ComboBoxItem Content="Uint"/>
-            <ComboBoxItem Content="Ushort"/>
+            <ComboBoxItem Content="Single"/>
+            <ComboBoxItem Content="Int16"/>
+            <ComboBoxItem Content="UInt16"/>
+            <ComboBoxItem Content="UInt32"/>
         </ComboBox>
 
         <Label x:Name="SortingLabel" Content="Choose sorting algorithm" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="0,253,0,0"/>

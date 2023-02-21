@@ -1,5 +1,6 @@
 ﻿using Lab1Core;
 using System;
+using System.Collections;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,7 @@ namespace Lab1WPF
     {
         SortManager sortMngr;
         string collectionTypeName, valueTypeName, algorithmName;
+
         public SortManagerWindow()
         {
             InitializeComponent();
@@ -44,47 +46,76 @@ namespace Lab1WPF
 
         private void GetResult_Click(object sender, RoutedEventArgs e)
         {
-            var arr = sortMngr.CreateFillAndSortArray<int>("Quick sort");
-            foreach (var item in arr)
+            OutputTextBox.Text= string.Empty;
+            if (string.IsNullOrWhiteSpace(collectionTypeName) || string.IsNullOrWhiteSpace(valueTypeName) || string.IsNullOrWhiteSpace(algorithmName))
+                MessageBox.Show("Unexpected error", "Error");
+            var inputValues = InputTextBox.Text;
+            IEnumerable? collection = null;
+            switch (collectionTypeName)
+            {
+                case "Array":
+                    collection = valueTypeName switch
+                    {
+                        "Int32" => sortMngr.CreateFillAndSortArray<int>(algorithmName, inputValues),
+                        "Double" => sortMngr.CreateFillAndSortArray<double>(algorithmName, inputValues),
+                        "Single" => sortMngr.CreateFillAndSortArray<float>(algorithmName, inputValues),
+                        "Int16" => sortMngr.CreateFillAndSortArray<short>(algorithmName, inputValues),
+                        "UInt16" => sortMngr.CreateFillAndSortArray<ushort>(algorithmName, inputValues),
+                        "UInt32" => sortMngr.CreateFillAndSortArray<uint>(algorithmName, inputValues),
+                        _ => null
+                    };
+                    break;
+                case "List":
+                    collection = valueTypeName switch
+                    {
+                        "Int32" => sortMngr.CreateFillAndSortList<int>(algorithmName, inputValues),
+                        "Double" => sortMngr.CreateFillAndSortList<double>(algorithmName, inputValues),
+                        "Single" => sortMngr.CreateFillAndSortList<float>(algorithmName, inputValues),
+                        "Int16" => sortMngr.CreateFillAndSortList<short>(algorithmName, inputValues),
+                        "UInt16" => sortMngr.CreateFillAndSortList<ushort>(algorithmName, inputValues),
+                        "UInt32" => sortMngr.CreateFillAndSortList<uint>(algorithmName, inputValues),
+                        _ => null
+                    };
+                    break;
+                case "LinkedList":
+                    collection = valueTypeName switch
+                    {
+                        "Int32" => sortMngr.CreateFillAndSortLinkedList<int>(algorithmName, inputValues),
+                        "Double" => sortMngr.CreateFillAndSortLinkedList<double>(algorithmName, inputValues),
+                        "Single" => sortMngr.CreateFillAndSortLinkedList<float>(algorithmName, inputValues),
+                        "Int16" => sortMngr.CreateFillAndSortLinkedList<short>(algorithmName, inputValues),
+                        "UInt16" => sortMngr.CreateFillAndSortLinkedList<ushort>(algorithmName, inputValues),
+                        "UInt32" => sortMngr.CreateFillAndSortLinkedList<uint>(algorithmName, inputValues),
+                        _ => null
+                    };
+                    break;
+                default:
+                    MessageBox.Show("Unexpected error", "Error");
+                    break;
+            }
+
+            if (collection == null) MessageBox.Show("Unexpected error", "Error");
+
+            foreach (var item in collection)
                 OutputTextBox.Text += item + " ";
-            //switch (collectionTypeName)
-            //{
-            //    case "Array":
-                    
-            //        break;
-            //    case "List":
-
-            //        break;
-            //    case "LinkedList":
-
-            //        break;
-            //    default:
-            //        MessageBox.Show("Unexpected error", "Error");
-            //        break;
-            //}
-
-            
-
-            //foreach (var item in arr)
-            //    OutputTextBox.Text += item + " ";
         }
 
         private void CollectionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
-            collectionTypeName = selectedItem.Content.ToString();
+            collectionTypeName = selectedItem?.Content.ToString();
         }
 
         private void ValueType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
-            valueTypeName = selectedItem.Content.ToString();
+            ComboBoxItem selectedItem = (ComboBoxItem)ValueType.SelectedItem;
+            valueTypeName = selectedItem?.Content.ToString();
         }
 
         private void SortignAlgorithm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
-            algorithmName = selectedItem.Content.ToString();
+            ComboBoxItem selectedItem = (ComboBoxItem)SortignAlgorithm.SelectedItem;
+            algorithmName = selectedItem?.Content.ToString();
         }
 
     }

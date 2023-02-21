@@ -34,7 +34,7 @@ public sealed class SortManager
         SortCollection(array, algorithmName);
         return array;
     }
-    public MyArray<T>? CreateFillAndSortArray<T>(string algorithmName, string inputValues = "10 3 18 4 -2")
+    public MyArray<T>? CreateFillAndSortArray<T>(string algorithmName, string inputValues)
     {
         Type type = typeof(T);
         var cuttedValues = ParseInput(inputValues, type);
@@ -105,7 +105,7 @@ public sealed class SortManager
     }
     string[]? ParseInput(string inputValues, Type type)
     {
-        if (string.IsNullOrWhiteSpace(inputValues))
+        if (string.IsNullOrWhiteSpace(inputValues) || inputValues.Length == 0)
             return null;
 
         bool isWhiteSpaceSeparator = false;
