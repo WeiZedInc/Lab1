@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Lab1Core;
+using System;
+using System.Drawing;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,6 +44,29 @@ namespace Lab1WPF
 
         private void GetResult_Click(object sender, RoutedEventArgs e)
         {
+            var arr = sortMngr.CreateFillAndSortArray<int>("Quick sort");
+            foreach (var item in arr)
+                OutputTextBox.Text += item + " ";
+            //switch (collectionTypeName)
+            //{
+            //    case "Array":
+                    
+            //        break;
+            //    case "List":
+
+            //        break;
+            //    case "LinkedList":
+
+            //        break;
+            //    default:
+            //        MessageBox.Show("Unexpected error", "Error");
+            //        break;
+            //}
+
+            
+
+            //foreach (var item in arr)
+            //    OutputTextBox.Text += item + " ";
         }
 
         private void CollectionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,5 +86,6 @@ namespace Lab1WPF
             ComboBoxItem selectedItem = (ComboBoxItem)CollectionType.SelectedItem;
             algorithmName = selectedItem.Content.ToString();
         }
+
     }
 }

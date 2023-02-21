@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Lab1Core
 {
-    public class MyList<T> : IEnumerable<T>, IEnumerator<T> // interfaces for acessing loops
+    public class MyList<T> : IEnumerable<T>, IEnumerator<T>, IIndexInterface<T> // interfaces for acessing loops
     {
         int count = 0; 
         public int Count { get => count; } // array size

@@ -2,9 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public interface IIndexInterface<T>
+{
+    // Indexer declaration:
+    public T this[int index]
+    {
+        get;
+        set;
+    }
+}
+
 namespace Lab1Core
 {
-    public struct MyArray<T> : IEnumerable<T>, IEnumerator<T> //interfaces for loops  
+    public struct MyArray<T> : IEnumerable<T>, IEnumerator<T>, IIndexInterface<T> //interfaces for loops  
     {
         int count;
         public int Count { get => count; } // array size

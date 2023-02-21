@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 // https://codereview.stackexchange.com/questions/138142/linked-list-in-c
 // used that implementation of LinkedList as base, because of the lack of time
+
 namespace Lab1Core
 {
     public class Node<T>
@@ -11,7 +12,7 @@ namespace Lab1Core
         public Node<T> next;
     }
 
-    public class MyLinkedList<T> : IEnumerable<T>, IEnumerable
+    public class MyLinkedList<T> : IEnumerable<T>, IEnumerable, IIndexInterface<T>
     {
         private Node<T> headNode;
         private int count;
