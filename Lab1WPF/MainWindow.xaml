@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1WPF"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MinHeight="455"
+        MinWidth="800"
         Title="Lab1 (Kyrpotenko Yurii)" Height="450" Width="800">
     <Grid>
         <Grid.Background>
@@ -13,15 +16,15 @@
                 <GradientStop Color="#FF00FFE2" Offset="0.277"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" Text="Welcome to the main menu. Please, choose one of the options below." VerticalAlignment="Top" TextAlignment="Center" FontSize="20" UseLayoutRounding="False"/>
-        <Button x:Name="TimeManagerBtn" Content="Time Manager" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="TimeManagerBtn_Click" Background="#FF24B9AF">
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" FontSize="20" UseLayoutRounding="False" Foreground="Black" FontFamily="Arial" FontWeight="Bold"><Run Text="Welcome to the main menu. "/><LineBreak/><Run Text="Please, choose one of the options below."/></TextBlock>
+        <Button x:Name="TimeManagerBtn" Content="Time Manager" HorizontalAlignment="Center" Margin="-350,0,0,0" VerticalAlignment="Center" Height="60" Width="200" Click="TimeManagerBtn_Click" Background="#FF24B9AF" FontWeight="Bold" FontSize="16" FontFamily="Segoe UI">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="SortManagerBtn" Content="Sort Manager" HorizontalAlignment="Left" Margin="480,0,0,0" VerticalAlignment="Center" Height="60" Width="193" Click="SortManagerBtn_Click" Background="#FF24B9AF">
+        <Button x:Name="SortManagerBtn" Content="Sort Manager" HorizontalAlignment="Center" Margin="350,0,0,0" VerticalAlignment="Center" Height="60" Width="200" Click="SortManagerBtn_Click" Background="#FF24B9AF" FontSize="16" FontWeight="Bold">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="7"/>

@@ -4,4 +4,11 @@
         <Setter Property="BorderBrush" Value="Yellow"/>
         <Setter Property="Background" Value="Blue"/>
     </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="8" />
+            </Style>
+        </Style.Resources>
+    </Style>
 </ResourceDictionary> 

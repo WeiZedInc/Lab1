@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1WPF"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MinHeight="455"
+        MinWidth="800"
         Title="TimeManagerWindow" Height="450" Width="800">
     <Grid>
-        <Grid Background="#FF0F6A88">
-            <Label x:Name="label" Content="Welcome to the Time Manager" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="MV Boli"/>
-        </Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="#FF00FFE2" Offset="0.277"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="Welcome to the Time Manager" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Arial" Background="{x:Null}" Foreground="Black"/>
     </Grid>
 </Window>

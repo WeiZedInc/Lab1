@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1WPF"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MinHeight="455"
+        MinWidth="800"
         Title="Sort Manager" Height="450" Width="800">
-    <Grid Background="#FF0F6A88">
-        <Label x:Name="label" Content="Welcome to the Sort Manager" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="MV Boli"/>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="#FF00FFE2" Offset="0.277"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="&#x9;Welcome to the Sort Manager!&#xD;&#xA;Please insert values to sort, and choose sorting."
+               HorizontalAlignment="Center" 
+               Margin="0,40,0,0" VerticalAlignment="Top" 
+               FontSize="20" 
+               FontFamily="Arial" Background="{x:Null}" Foreground="Black" FontWeight="Bold"/>
+        <Button x:Name="GetResultButton" Content="Sort" HorizontalAlignment="Center" Margin="0,335,0,0" VerticalAlignment="Top" Height="53" Width="144" Click="GetResult_Click" Background="#FF24B9AF" FontWeight="Bold" FontSize="16" FontFamily="Segoe UI">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="HowToUseButton" Content="How to use?" HorizontalAlignment="Center" Margin="0,390,0,0" VerticalAlignment="Top" Height="33" Width="98" Click="HowToUseButton_Click" Background="#FFB9B324" FontWeight="Bold" FontSize="14" FontFamily="Segoe UI">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="InputTextBox" HorizontalAlignment="Center" Margin="-600,150,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="top" Width="170" Height="144"
+                 VerticalScrollBarVisibility="Auto"
+                 TextAlignment="Center"
+                 AcceptsReturn="True"/>
+        <TextBox x:Name="OutputTextBox" HorizontalAlignment="Center" Margin="600,150,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="170" Height="144"
+                 VerticalScrollBarVisibility="Auto"
+                 TextAlignment="Center"
+                 AcceptsReturn="True"/>
+        <Label x:Name="label1" Content="Input values" HorizontalAlignment="Center" Margin="-600,119,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label x:Name="label1_Copy" Content="Result" HorizontalAlignment="Center" Margin="600,119,0,0" VerticalAlignment="Top" FontSize="18"/>
+
     </Grid>
 </Window>
