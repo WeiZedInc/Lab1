@@ -8,6 +8,7 @@ namespace Lab1WPF
         public MainWindow()
         {
             InitializeComponent();
+            base.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         private void SortManagerBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -15,6 +16,7 @@ namespace Lab1WPF
             SortManagerWindow sortManagerWindow = new SortManagerWindow();
             sortManagerWindow.Closed += (object? sender, System.EventArgs e) => { this.Visibility = Visibility.Visible; };
             this.Visibility = Visibility.Hidden;
+            sortManagerWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             sortManagerWindow.Show();
         }
 
@@ -24,6 +26,7 @@ namespace Lab1WPF
             TimeManagerWindow timeManagerWindow = new TimeManagerWindow();
             timeManagerWindow.Closed += (object? sender, System.EventArgs e) => { this.Visibility = Visibility.Visible; };
             this.Visibility = Visibility.Hidden;
+            timeManagerWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             timeManagerWindow.Show();
         }
     }
