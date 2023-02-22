@@ -1,23 +1,35 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Lab1
+public interface IIndexInterface<T>
 {
-    public class MyList<T> : IEnumerable<T>, IEnumerator<T> // interfaces for acessing loops
+    // Indexer declaration:
+    public T this[int index]
     {
-        int count = 0; 
+        get;
+        set;
+    }
+}
+
+namespace Lab1Core
+{
+    public struct MyArray<T> : IEnumerable<T>, IEnumerator<T>, IIndexInterface<T> //interfaces for loops  
+    {
+        int count;
         public int Count { get => count; } // array size
+        T[] array;
+        public T[] Array { get => array; }
 
-        T[] array = new T[1]; //list based on generic array
-        public T[] Array { get => array; } 
-        int index = -1; 
 
-        public void Clear() 
+        public MyArray(int size = 1, int count = 0, int position = -1)
         {
-            array = new T[1];
-            count = 0;
-            index = -1;
+            array = new T[size];
+            count = array.Length;
+            this.count = count;
+            this.position = position;
         }
-        
+
         public T Min() 
         {
             dynamic smallest = array[0];
@@ -40,7 +52,7 @@ namespace Lab1
             return largest;
         }
 
-        public bool Contains(T value) 
+        public bool Contains(T value)
         {
             foreach (T elment in array)
             {
@@ -50,28 +62,14 @@ namespace Lab1
             return false;
         }
 
-        public void Add(T mass) 
-        {
-            count++;
-            System.Array.Resize(ref this.array, count);
-            index++; 
-            this.array[index] = mass; 
-        }
-        public T this[int index]  //indexator, list[]
+        public T this[int index]  //indexator
         {
             get { return array[index]; }
             set { array[index] = value; }
         }
 
         #region interface implemetation
-        int position = -1;
-        public bool MoveNext() 
-        {
-            position++;
-            return (position < array.Length);
-        }
-
-        public void Reset() => position = -1; 
+        int position;
 
         public T Current
         {
@@ -79,9 +77,21 @@ namespace Lab1
         }
 
         object IEnumerator.Current => Current;
-        public IEnumerator GetEnumerator() => array.GetEnumerator();
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)array).GetEnumerator();
-        public void Dispose() => this.Dispose();
+
+        public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)array).GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => array.GetEnumerator();
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < array.Length);
+        }
+
+        public void Reset() => position = -1;
+
+        public void Dispose() => array = new T[0];
+
         #endregion
 
     }

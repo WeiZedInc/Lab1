@@ -1,15 +1,15 @@
-﻿namespace Lab1;
+﻿using Lab1Core;
+using System.Collections.Generic;
 
-static class ExtensionSorting
+static public class ExtensionSorting
 {
     static bool isRecursion = false;
-    static bool CheckForCorrectClass(dynamic myClass)
+    static bool CheckForCorrectClass(object myClass) //This methods made only for my custom generic classes
     {
         if (myClass.GetType().Name == typeof(MyArray<>).Name ||
             myClass.GetType().Name == typeof(MyList<>).Name ||
             myClass.GetType().Name == typeof(MyLinkedList<>).Name) return true;
 
-        Console.WriteLine("This methods made only for my custom generic classes");
         return false;
     }
     static dynamic Min(dynamic array)
@@ -184,52 +184,6 @@ static class ExtensionSorting
             arr[k++] = rightTempArray[j++];
     }
 
-
-    public static void CombSortGeneric<T>(this T myClass)
-    {
-        Console.WriteLine("Comb sort no implemented yet.");
-        return;
-
-        if (CheckForCorrectClass(myClass) == false) return;
-        dynamic dynamicT = myClass;
-
-        dynamic arr = dynamicT.Array;
-        int arrayLength = arr.Length;
-        int currentStep = arrayLength - 1;
-        dynamic value;
-
-        while (currentStep > 1)
-        {
-            for (int i = 0; i + currentStep < arr.Length; i++)
-            {
-                value = arr[i];
-                if (value > arr[i + currentStep])
-                {
-                    Swap(arr[i], arr[i + currentStep]);
-                }
-            }
-            currentStep = GetNextStep(currentStep);
-        }
-
-        //bubble sort
-        for (int i = 1; i < arrayLength; i++)
-        {
-            bool swapFlag = false;
-            for (int j = 0; j < arrayLength - i; j++)
-            {
-                value = arr[j];
-                if (value > arr[j + 1])
-                {
-                    Swap(arr[j], arr[j + 1]);
-                    swapFlag = true;
-                }
-            }
-
-            if (!swapFlag)
-                break;
-        }
-        dynamicT.Array = arr;
-    }
     static int GetNextStep(int step)
     {
         step = step * 1000 / 1247;
@@ -304,7 +258,7 @@ static class ExtensionSorting
         int[] pref = new int[1 << r];
 
         // number of groups 
-        int groups = (int)Math.Ceiling(b / (double)r);
+        int groups = (int)System.Math.Ceiling(b / (double)r);
 
         // the mask to identify groups 
         int mask = (1 << r) - 1;

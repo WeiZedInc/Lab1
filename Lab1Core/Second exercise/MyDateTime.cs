@@ -1,4 +1,6 @@
-﻿namespace Lab1
+﻿using System;
+
+namespace Lab1Core
 {
     internal class MyDateTime
     {

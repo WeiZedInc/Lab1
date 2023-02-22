@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 // https://codereview.stackexchange.com/questions/138142/linked-list-in-c
 // used that implementation of LinkedList as base, because of the lack of time
-namespace Lab1
+
+namespace Lab1Core
 {
     public class Node<T>
     {
@@ -9,7 +13,7 @@ namespace Lab1
         public Node<T> next;
     }
 
-    internal class MyLinkedList<T> : IEnumerable<T>, IEnumerable
+    public class MyLinkedList<T> : IEnumerable<T>, IEnumerable, IIndexInterface<T>
     {
         private Node<T> headNode;
         private int count;
@@ -23,6 +27,16 @@ namespace Lab1
         {
             foreach (T item in Items)
                 AddHead(item);
+        }
+
+        public MyLinkedList(int size) : base()
+        {
+            for (int i = 0; i < size; i++)
+            {
+                Node<T> NewNode = new Node<T>() { data = default, next = headNode };
+                headNode = NewNode;
+                count++;
+            }
         }
 
         private IEnumerable<Node<T>> Nodes
