@@ -11,7 +11,13 @@ namespace Lab1Core
 
         T[] array = new T[1]; //list based on generic array
         public T[] Array { get => array; } 
-        int index = -1; 
+        int index = -1;
+        public MyList() { }
+        public MyList(int size)
+        {
+            array = new T[size];
+            count = size;
+        }
 
         public void Clear() 
         {

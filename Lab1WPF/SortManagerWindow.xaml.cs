@@ -1,9 +1,4 @@
-﻿using Lab1Core;
-using System;
-using System.Collections;
-using System.Drawing;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 

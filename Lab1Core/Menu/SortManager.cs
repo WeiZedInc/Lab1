@@ -1,8 +1,6 @@
 ﻿using Lab1Core;
 using System.Collections;
-using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 public sealed class SortManager
 {
@@ -17,7 +15,7 @@ public sealed class SortManager
         if (cuttedValues == null) return null;
 
         int size = cuttedValues.Length;
-        MyLinkedList<T> array = (MyLinkedList<T>)FillCollection(new MyLinkedList<T>(), ref type, ref size, ref cuttedValues);
+        MyLinkedList<T> array = (MyLinkedList<T>)FillCollection(new MyLinkedList<T>(size), ref type, ref size, ref cuttedValues);
 
         SortCollection(array, algorithmName);
         return array;
@@ -29,7 +27,7 @@ public sealed class SortManager
         if (cuttedValues == null) return null;
 
         int size = cuttedValues.Length;
-        MyList<T> array = (MyList<T>)FillCollection(new MyList<T>(), ref type, ref size, ref cuttedValues);
+        MyList<T> array = (MyList<T>)FillCollection(new MyList<T>(size), ref type, ref size, ref cuttedValues);
 
         SortCollection(array, algorithmName);
         return array;
@@ -124,7 +122,7 @@ public sealed class SortManager
     void SortCollection(IEnumerable collection, string algorithmName)
     {
         if ("MyLinkedList`1" == collection.GetType().Name)
-            algorithmName = "Merge Sort";
+            algorithmName = "Merge sort";
 
         switch (algorithmName)
         {
