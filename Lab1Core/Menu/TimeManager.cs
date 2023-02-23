@@ -11,22 +11,17 @@ namespace Lab1Core.Menu
                 MyDateTime myDateTime = new MyDateTime();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Time menu:");
-                Console.WriteLine("1.Show current time");
-                Console.WriteLine("2.Validate your time");
-                Console.WriteLine("3.Substract your time with another time");
-                Console.WriteLine("4.Add time to time");
-                Console.WriteLine("5.Subtract time from time");
-                Console.WriteLine("6.Find day by date");
-                Console.WriteLine("7.Use timezone");
-                Console.WriteLine("8.Find the most popular day of the week by date range");
-                Console.WriteLine("9.Switch date to the julian calendar");
+                Console.WriteLine("2.Validate your time"); // btn
+                Console.WriteLine("3.Substract your time with another time"); // btn
+                Console.WriteLine("4.Add time to time"); // btn
+                Console.WriteLine("5.Subtract time from time"); // btn
+                Console.WriteLine("6.Find day by date"); // btn
+                Console.WriteLine("7.Use timezone"); // btn
+                Console.WriteLine("8.Find the most popular day of the week by date range"); //btn
+                Console.WriteLine("9.Switch date to the julian calendar"); //btn
 
                 switch (Console.ReadLine())
                 {
-                    case "1":
-                        Console.Clear();
-                        myDateTime.ShowCurrentTime();
-                        break;
                     case "2":
                         Console.Clear();
                         myDateTime.ValidateDateTime();

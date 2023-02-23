@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace Lab1Core
 {
-    internal class MyDateTime
+    public class MyDateTime
     {
+        public delegate void TimeTickerHandler();
+        public event TimeTickerHandler TimeTicker;
+
         public DateTime firstCustomTime { get; set; }
         public DateTime secondCustomTime { get; set; }
         public TimeSpan customTimeSpan { get; set; }
+        
         public MyDateTime()
         {
             firstCustomTime = new DateTime();
@@ -14,12 +20,15 @@ namespace Lab1Core
             customTimeSpan = new TimeSpan();
         }
 
-        public void ShowCurrentTime()
+        public async Task StartTimeTickerEvent()
         {
-            var currentTime = DateTime.Now;
-            Console.WriteLine("Current time: " + currentTime.ToString("\tdddd, dd MMMM yyyy HH:mm:ss"));
-            Console.WriteLine("Short variant: \t" + currentTime);
-            Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K\n"));
+            TimeTicker?.Invoke();
+            await Task.Delay(1000 - DateTime.Now.Millisecond);
+            while (true)
+            {
+                TimeTicker?.Invoke();
+                await Task.Delay(1000);
+            }
         }
         public bool ValidateDateTime(bool isFirstTime = true)
         {
