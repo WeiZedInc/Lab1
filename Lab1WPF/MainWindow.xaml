@@ -9,13 +9,13 @@
         MinHeight="455"
         MinWidth="800"
         Title="Lab1 (Kyrpotenko Yurii)" Height="450" Width="800">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF00FFE2" Offset="0.277"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="#FF00FFE2" Offset="0.277"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" FontSize="20" UseLayoutRounding="False" Foreground="Black" FontFamily="Arial" FontWeight="Bold"><Run Text="Welcome to the main menu. "/><LineBreak/><Run Text="Please, choose one of the options below."/></TextBlock>
         <Button x:Name="TimeManagerBtn" Content="Time Manager" HorizontalAlignment="Center" Margin="-350,0,0,0" VerticalAlignment="Center" Height="60" Width="200" Click="TimeManagerBtn_Click" Background="#FF24B9AF" FontWeight="Bold" FontSize="16" FontFamily="Segoe UI">
             <Button.Resources>

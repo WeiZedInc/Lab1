@@ -9,13 +9,13 @@
         MinHeight="455"
         MinWidth="800"
         Title="TimeManagerWindow" Height="450" Width="800">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF00FFE2" Offset="0.277"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="#FF00FFE2" Offset="0.277"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <Label x:Name="WelcomingLabel" Content="Welcome to the Time Manager" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Arial" Background="{x:Null}" Foreground="Black"/>
         <Label x:Name="CurrentTimeLabel" Content="Label" HorizontalAlignment="Center" Margin="0,83,0,0" VerticalAlignment="Top"/>
     </Grid>
