@@ -54,7 +54,12 @@ namespace Lab1WPF
 
         private void FindDayBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (dateTime.ValidateDateTime(FirstInputBox.Text, true) == false)
+            {
+                MessageBox.Show("Wrong input of the first date!");
+                return;
+            }
+            MessageBox.Show(dateTime.FindDayByDate());
         }
 
         private void UseTimeZoneBtn_Click(object sender, RoutedEventArgs e)
@@ -62,9 +67,14 @@ namespace Lab1WPF
 
         }
 
-        private void SwitchCalendarBtn_Click(object sender, RoutedEventArgs e)
+        private void JulianCalendarBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (dateTime.ValidateDateTime(FirstInputBox.Text, true) == false)
+            {
+                MessageBox.Show("Wrong input of the first date!");
+                return;
+            }
+            MessageBox.Show(dateTime.FindDayByDate());
         }
 
         private void FindPopularDayBtn_Click(object sender, RoutedEventArgs e)

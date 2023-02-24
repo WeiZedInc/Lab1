@@ -19,9 +19,9 @@
         <Label x:Name="WelcomingLabel" Content="Welcome to the Time Manager!&#xD;&#xA;Input operable dates, please." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Arial" Background="{x:Null}" Foreground="Black" Width="312"/>
         <Label x:Name="CurrentTimeLabel" Content="Label" HorizontalAlignment="Center" Margin="0,83,0,0" VerticalAlignment="Top"/>
         <Button x:Name="CalculateTimeBtn" Click="CalculateTimeBtn_Click" Content="Calculate time" FontSize="16" HorizontalAlignment="Left" Margin="246,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
-        <Button x:Name="FindDayBtn" Click="FindDayBtn_Click" Content="Find day" FontSize="16" HorizontalAlignment="Left" Margin="586,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
+        <Button x:Name="FindDayBtn" Click="FindDayBtn_Click" Content="Find day by date" FontSize="16" HorizontalAlignment="Left" Margin="586,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
         <Button x:Name="UseTimeZoneBtn" Click="UseTimeZoneBtn_Click" Content="Use Time Zone" FontSize="16" HorizontalAlignment="Left" Margin="416,128,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
-        <Button x:Name="SwitchCalendarBtn" Click="SwitchCalendarBtn_Click" Content="Switch calendar type" FontSize="15" HorizontalAlignment="Left" Margin="408,269,0,0" VerticalAlignment="Top" Height="50" Width="156"/>
+        <Button x:Name="JulianCalendarBtn" Click="JulianCalendarBtn_Click" Content="Julian calendar date" FontSize="15" HorizontalAlignment="Left" Margin="408,269,0,0" VerticalAlignment="Top" Height="50" Width="156"/>
         <Button x:Name="FindPopularDayBtn" Click="FindPopularDayBtn_Click" Content="Find most popular day of the week" FontSize="16" HorizontalAlignment="Left" Margin="351,202,0,0" VerticalAlignment="Top" Height="50" Width="270"/>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25,0,0,211">
             <TextBlock Text="First date for calculations" Height="27" Width="193" FontSize="16" TextAlignment="Center"/>

@@ -121,6 +121,15 @@ namespace Lab1Core
                 Console.WriteLine("Wrong input.");
             }
         }
+
+        public string JulianDate()
+        {
+            DateTime dateTime = DateTime.FromOADate(firstCustomTime.ToOADate() + 2415018.5);
+            return "Julian date for your date is: " + dateTime; 
+        }
+
+        public string FindDayByDate() => "Full date is: " + firstCustomTime.ToString("dddd, dd MMMM yyyy");
+
         public void FindMostPopularDayOfTheWeek()
         {
             Console.WriteLine("Please, enter the date range");
