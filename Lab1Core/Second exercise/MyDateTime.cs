@@ -44,185 +44,22 @@ namespace Lab1Core
         }
 
 
-        public void SubtractTime()
+        public string CalculateTime(bool isSubtractingWithCurrentTime, bool isSubtracting)
         {
-            //if (!ValidateDateTime())
-               // return;
-
-            Console.WriteLine("Do you want to subtract this time with current time? y/n");
-            string result = Console.ReadLine();
-            if (result == "y")
+            if (isSubtractingWithCurrentTime)
             {
                 var timeNow = DateTime.Now;
-                customTimeSpan = firstCustomTime.Subtract(timeNow);
-                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString()).Replace("-", "");
-                Console.WriteLine($"Result is: ({firstCustomTime}) - ({timeNow}) = {customTimeSpan.Days} days " + timeFormatted);
-                Console.WriteLine("Result saved for further calculations.\n");
-            }
-            else if (result == "n")
-            {
-                Console.WriteLine("Subtraction with 2 custom values.");
-                //if (!ValidateDateTime(false))
-                //    return;
-
-                customTimeSpan = firstCustomTime.Subtract(secondCustomTime);
-                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString()).Replace("-", "");
-                Console.WriteLine($"Result is: ({firstCustomTime}) - ({secondCustomTime}) = {customTimeSpan.Days} days " + timeFormatted);
-                Console.WriteLine("Result saved for further calculations.\n");
+                customTimeSpan = new TimeSpan(firstCustomTime.Add(new TimeSpan(timeNow.Ticks)).Ticks);
+                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString().Replace("-", ""));
+                return $"Time difference is: ({firstCustomTime}) - ({timeNow}) = {customTimeSpan.Days} days " + timeFormatted;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Answer isn't correct, try again.");
-                return;
-            }
-
-            Console.WriteLine("In which format do you want to get result?");
-            Console.WriteLine("Press any key for all formats  | d - days / h - hours / m - minutes / s - seconds");
-            switch (Console.ReadLine())
-            {
-                case "d":
-                    Console.WriteLine("d = " + customTimeSpan.TotalDays);
-                    break;
-                case "h":
-                    Console.WriteLine("h = " + customTimeSpan.TotalHours);
-                    break;
-                case "m":
-                    Console.WriteLine("m = " + customTimeSpan.TotalMinutes);
-                    break;
-                case "s":
-                    Console.WriteLine("s = " + customTimeSpan.TotalSeconds);
-                    break;
-                default:
-                    Console.WriteLine("Displaying all.");
-                    Console.WriteLine("d = " + customTimeSpan.TotalDays);
-                    Console.WriteLine("h = " + customTimeSpan.TotalHours);
-                    Console.WriteLine("m = " + customTimeSpan.TotalMinutes);
-                    Console.WriteLine("s = " + customTimeSpan.TotalSeconds);
-                    Console.WriteLine();
-                    break;
+                customTimeSpan = new TimeSpan(firstCustomTime.Add(new TimeSpan(secondCustomTime.Ticks)).Ticks);
+                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString().Replace("-", ""));
+                return $"Time difference is: ({firstCustomTime}) - ({secondCustomTime}) = {customTimeSpan.Days} days " + timeFormatted;
             }
         }
-        public void CalculateTime(char symbol)
-        {
-            Console.WriteLine("Do you want to use saved result, or a new one? saved/new");
-            float value = 0;
-            string timeFormat = "";
-            switch (Console.ReadLine())
-            {
-                case "saved":
-                    Console.WriteLine("Using saved value from last subtraction: " + customTimeSpan);
-                    timeFormat = "saved";
-                    break;
-                case "new":
-                    Console.WriteLine("Enter time format. (d - days, h - hours, m - minutes, s - seconds)");
-                    timeFormat = Console.ReadLine();
-                    switch (timeFormat)
-                    {
-                        case "d":
-                            Console.WriteLine("Enter days amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "h":
-                            Console.WriteLine("Enter hours amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "m":
-                            Console.WriteLine("Enter minutes amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "s":
-                            Console.WriteLine("Enter second amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        default:
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Incorrect format.");
-                            return;
-                    }
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Incorrect input.");
-                    return;
-            }
-
-
-            if (symbol == '+')
-            {
-                switch (timeFormat)
-                {
-                    case "d":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(value));
-                        break;
-                    case "h":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddHours(value));
-                        break;
-                    case "m":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddMinutes(value));
-                        break;
-                    case "s":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddSeconds(value));
-                        break;
-                    case "saved":
-
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(customTimeSpan.TotalDays));
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Idk how did u get here :3");
-                        break;
-                }
-            }
-            else
-            {
-                switch (timeFormat)
-                {
-                    case "d":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(-value));
-                        break;
-                    case "h":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddHours(-value));
-                        break;
-                    case "m":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddMinutes(-value));
-                        break;
-                    case "s":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddSeconds(-value));
-                        break;
-                    case "saved":
-
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(-customTimeSpan.TotalDays));
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Idk how did u get here :3");
-                        break;
-                }
-            }
-            Console.WriteLine();
-        }
-
-
         public void SwitchTimeZones()
         {
             Console.WriteLine("Do you want to see all time zones? y/n \n");

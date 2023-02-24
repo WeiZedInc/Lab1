@@ -1,4 +1,5 @@
-﻿using Lab1Core;
+﻿using ActiproSoftware.Windows.Controls;
+using Lab1Core;
 using System;
 using System.Windows;
 
@@ -10,6 +11,7 @@ namespace Lab1WPF
     public partial class TimeManagerWindow : Window
     {
         MyDateTime dateTime;
+        bool isSecondBlockVisible = true;
         public TimeManagerWindow()
         {
             InitializeComponent();
@@ -20,19 +22,34 @@ namespace Lab1WPF
 
         void UpdateTime() => CurrentTimeLabel.Content = "Current time: " + DateTime.Now.ToString("\tdddd, dd MMMM yyyy HH:mm:ss");
 
-        private void ValidateBtn_Click(object sender, RoutedEventArgs e)
+        private void CalculateTimeBtn_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void AddTimeBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SubtractTimeBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            if (CheckInputs() == false) return;
+            string result = "";
+            var dialog = new UserPromptControl()
+            {
+                Header = "Do you want to subtract dates?",
+                Content = "Press YES to subtract. \nPress NO to add.",
+                StandardButtons = UserPromptStandardButtons.YesNo,
+                StandardStatusImage = UserPromptStandardImage.Question,
+            };
+            var answ = UserPromptWindow.ShowDialog(dialog);
+            
+            if (isSecondBlockVisible) // with curr
+            {
+                if (answ == UserPromptStandardResult.Yes)
+                    result = dateTime.CalculateTime(true, true);
+                else
+                    result = dateTime.CalculateTime(true,false);
+            }
+            else
+            {
+                if (answ == UserPromptStandardResult.Yes)
+                    result = dateTime.CalculateTime(false, true);
+                else
+                    result = dateTime.CalculateTime(false, false);
+            }
+            MessageBox.Show(result);
         }
 
         private void FindDayBtn_Click(object sender, RoutedEventArgs e)
@@ -55,9 +72,28 @@ namespace Lab1WPF
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        bool CheckInputs()
         {
+            if (dateTime.ValidateDateTime(FirstInputBox.Text, true) == false)
+            {
+                MessageBox.Show("Wrong input of the first date!");
+                return false;
+            }
+            if (isSecondBlockVisible == true && dateTime.ValidateDateTime(SecondInputBox.Text, false) == false)
+            {
+                MessageBox.Show("Wrong input of the second date!");
+                return false;
+            }
+            return true;
+        }
 
+        private void WithCurrentCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            isSecondBlockVisible = !isSecondBlockVisible;
+            if (isSecondBlockVisible)
+                SecondTimeBlock.Visibility = Visibility.Visible;
+            else
+                SecondTimeBlock.Visibility = Visibility.Hidden;
         }
     }
 }

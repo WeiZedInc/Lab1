@@ -16,23 +16,21 @@
         </LinearGradientBrush>
     </Window.Background>
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="440" Width="800">
-        <Label x:Name="WelcomingLabel" Content="Welcome to the Time Manager" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Arial" Background="{x:Null}" Foreground="Black"/>
+        <Label x:Name="WelcomingLabel" Content="Welcome to the Time Manager!&#xD;&#xA;Input operable dates, please." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Arial" Background="{x:Null}" Foreground="Black" Width="312"/>
         <Label x:Name="CurrentTimeLabel" Content="Label" HorizontalAlignment="Center" Margin="0,83,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddTimeBtn" Click="AddTimeBtn_Click" Content="Add time" FontSize="16" HorizontalAlignment="Left" Margin="246,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
-        <Button x:Name="SubtractTimeBtn" Click="SubtractTimeBtn_Click" Content="Subtract time" FontSize="16" HorizontalAlignment="Left" Margin="416,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
+        <Button x:Name="CalculateTimeBtn" Click="CalculateTimeBtn_Click" Content="Calculate time" FontSize="16" HorizontalAlignment="Left" Margin="246,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
         <Button x:Name="FindDayBtn" Click="FindDayBtn_Click" Content="Find day" FontSize="16" HorizontalAlignment="Left" Margin="586,129,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
-        <Button x:Name="UseTimeZoneBtn" Click="UseTimeZoneBtn_Click" Content="Use Time Zone" FontSize="16" HorizontalAlignment="Left" Margin="416,349,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
-        <Button x:Name="SwitchCalendarBtn" Click="SwitchCalendarBtn_Click" Content="Switch calendar type" FontSize="15" HorizontalAlignment="Left" Margin="408,276,0,0" VerticalAlignment="Top" Height="50" Width="156"/>
-        <Button x:Name="FindPopularDayBtn" Click="FindPopularDayBtn_Click" Content="Find most popular day of the week" FontSize="16" HorizontalAlignment="Left" Margin="351,209,0,0" VerticalAlignment="Top" Height="50" Width="270"/>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="81,0,0,209">
-            <TextBlock Text="Input first date" Height="27" Width="122" FontSize="16" TextAlignment="Center"/>
+        <Button x:Name="UseTimeZoneBtn" Click="UseTimeZoneBtn_Click" Content="Use Time Zone" FontSize="16" HorizontalAlignment="Left" Margin="416,128,0,0" VerticalAlignment="Top" Height="50" Width="140"/>
+        <Button x:Name="SwitchCalendarBtn" Click="SwitchCalendarBtn_Click" Content="Switch calendar type" FontSize="15" HorizontalAlignment="Left" Margin="408,269,0,0" VerticalAlignment="Top" Height="50" Width="156"/>
+        <Button x:Name="FindPopularDayBtn" Click="FindPopularDayBtn_Click" Content="Find most popular day of the week" FontSize="16" HorizontalAlignment="Left" Margin="351,202,0,0" VerticalAlignment="Top" Height="50" Width="270"/>
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25,0,0,211">
+            <TextBlock Text="First date for calculations" Height="27" Width="193" FontSize="16" TextAlignment="Center"/>
             <TextBox x:Name="FirstInputBox" Height="30" Width="122" />
-            <Button Content="Confirm" Click="Button_Click" Height="34" Width="122" Margin="0,10,0,0"/>
         </StackPanel>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="82,0,0,98">
-            <TextBlock Text="Input second date" Height="27" Width="122" FontSize="15" TextAlignment="Center" />
+        <StackPanel x:Name="SecondTimeBlock" Visibility="Visible" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="23,0,0,74">
+            <TextBlock Text="Second date for calculations" Height="27" Width="196" FontSize="15" TextAlignment="Center" />
             <TextBox x:Name="SecondInputBox" Height="30" Width="122" />
-            <Button Content="Confirm" Click="Button_Click" Height="34" Width="122" Margin="0,10,0,0"/>
         </StackPanel>
+        <CheckBox x:Name="WithCurrentCheckBox" Click="WithCurrentCheckBox_Click" Content="Calculate with one date" HorizontalAlignment="Left" Margin="49,237,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Lab1Core.Menu;
 
 namespace Lab1WPF
 {
