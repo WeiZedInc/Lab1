@@ -12,7 +12,7 @@ namespace Lab1Core
         public DateTime firstCustomTime { get; set; }
         public DateTime secondCustomTime { get; set; }
         public TimeSpan customTimeSpan { get; set; }
-        
+
         public MyDateTime()
         {
             firstCustomTime = new DateTime();
@@ -60,84 +60,30 @@ namespace Lab1Core
                 return $"Time difference is: ({firstCustomTime}) - ({secondCustomTime}) = {customTimeSpan.Days} days " + timeFormatted;
             }
         }
-        public void SwitchTimeZones()
+        public string SwitchTimeZones(string timeZone = "Pacific Standard Time")
         {
-            Console.WriteLine("Do you want to see all time zones? y/n \n");
-            string timeInput = Console.ReadLine();
-            string newTimeZone = "Pacific Standard Time";
-            if (timeInput == "y")
+            try
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                foreach (TimeZoneInfo tz in TimeZoneInfo.GetSystemTimeZones())
-                    Console.WriteLine(tz.DisplayName + " - \n" + tz.Id + "\n");
-                Console.ForegroundColor = ConsoleColor.Green;
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                return "Local time in other time zone: " + date + " " + tz.DisplayName + '\n';
             }
-
-            Console.WriteLine("\n\n Do you want to change time zone for current computer time, or new? current/new ");
-            string input = Console.ReadLine();
-            if (input == "current")
+            catch (TimeZoneNotFoundException)
             {
-                Console.WriteLine("Enter prefered time zone (use only english timezone names from the offered list):");
-                newTimeZone = Console.ReadLine();
-                var currentTime = DateTime.Now;
-                try
-                {
-                    var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
-                    var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-                    Console.WriteLine("Local time in other time zone: " + date + " " + tz.DisplayName + '\n');
-                }
-                catch (TimeZoneNotFoundException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There are no such time zone.");
-                    return;
-                }
-
-
-            }
-            else if (input == "new")
-            {
-                //ValidateDateTime();
-
-                Console.WriteLine("Enter prefered time zone:");
-                newTimeZone = Console.ReadLine();
-                try
-                {
-                    var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
-                    var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-                    Console.WriteLine("New time in other time zone: " + date + " " + tz.DisplayName + '\n');
-                }
-                catch (TimeZoneNotFoundException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There are no such time zone.");
-                    return;
-                }
-
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong input.");
+                return "There are no such time zone.";
             }
         }
 
         public string JulianDate()
         {
             DateTime dateTime = DateTime.FromOADate(firstCustomTime.ToOADate() + 2415018.5);
-            return "Julian date for your date is: " + dateTime; 
+            return "Julian date for your date is: " + dateTime;
         }
 
         public string FindDayByDate() => "Full date is: " + firstCustomTime.ToString("dddd, dd MMMM yyyy");
 
-        public void FindMostPopularDayOfTheWeek()
+        public string FindMostPopularDayOfTheWeek(int dayNum = 1)
         {
-            Console.WriteLine("Please, enter the date range");
-           // if (!ValidateDateTime() || !ValidateDateTime(false))
-            //    return;
-
-            Console.WriteLine("Please, enter the day of the months");
-            int dayNum = 0;
             DateTime finishDate = DateTime.Now, startDate = DateTime.Now;
             Dictionary<string, int> daysCounter = new Dictionary<string, int>
         {
@@ -151,9 +97,7 @@ namespace Lab1Core
         };
             if (!int.TryParse(Console.ReadLine(), out dayNum) || dayNum > 31 || dayNum < 1)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Incorrect day number, try again.");
-                return;
+                return "";
             }
 
             if (DateTime.Compare(firstCustomTime, secondCustomTime) > 0)
@@ -163,9 +107,7 @@ namespace Lab1Core
             }
             else if (DateTime.Compare(firstCustomTime, secondCustomTime) == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Dates cannot be the same");
-                return;
+                return "";
             }
             else if (DateTime.Compare(firstCustomTime, secondCustomTime) < 0)
             {
@@ -184,7 +126,7 @@ namespace Lab1Core
                 daysLeft--;
             }
 
-            Console.WriteLine("The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.");
+            return "The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.";
         }
     }
 }

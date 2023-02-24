@@ -34,13 +34,13 @@ namespace Lab1WPF
                 StandardStatusImage = UserPromptStandardImage.Question,
             };
             var answ = UserPromptWindow.ShowDialog(dialog);
-            
+
             if (isSecondBlockVisible) // with curr
             {
                 if (answ == UserPromptStandardResult.Yes)
                     result = dateTime.CalculateTime(true, true);
                 else
-                    result = dateTime.CalculateTime(true,false);
+                    result = dateTime.CalculateTime(true, false);
             }
             else
             {
@@ -62,9 +62,14 @@ namespace Lab1WPF
             MessageBox.Show(dateTime.FindDayByDate());
         }
 
-        private void UseTimeZoneBtn_Click(object sender, RoutedEventArgs e)
+        private void UseTimeZoneBtn_Click(object sender, RoutedEventArgs e) //
         {
+            var timezones = "";
+            foreach (TimeZoneInfo tz in TimeZoneInfo.GetSystemTimeZones())
+                timezones += tz.DisplayName + " - \n" + tz.Id + "\n";
+            MessageBox.Show(timezones + "\nChoose prefered time zone (use only english timezone names from the offered list):");
 
+            MessageBox.Show(dateTime.SwitchTimeZones());
         }
 
         private void JulianCalendarBtn_Click(object sender, RoutedEventArgs e)
@@ -79,7 +84,12 @@ namespace Lab1WPF
 
         private void FindPopularDayBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CheckInputs() == false) return;
+            var result = dateTime.FindMostPopularDayOfTheWeek(1);
+            if (result.Length == 0)
+            {
+                MessageBox.Show("Wrong input data!");
+            }
         }
 
         bool CheckInputs()
