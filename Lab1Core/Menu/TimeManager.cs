@@ -9,8 +9,6 @@ namespace Lab1Core.Menu
             try
             {
                 MyDateTime myDateTime = new MyDateTime();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Time menu:");
                 Console.WriteLine("2.Validate your time"); // btn
                 Console.WriteLine("3.Substract your time with another time"); // btn
                 Console.WriteLine("4.Add time to time"); // btn
@@ -24,7 +22,7 @@ namespace Lab1Core.Menu
                 {
                     case "2":
                         Console.Clear();
-                        myDateTime.ValidateDateTime();
+                        //myDateTime.ValidateDateTime();
                         break;
                     case "3":
                         Console.Clear();
@@ -32,17 +30,17 @@ namespace Lab1Core.Menu
                         break;
                     case "4":
                         Console.Clear();
-                        if (myDateTime.ValidateDateTime())
+                        //if (myDateTime.ValidateDateTime())
                             myDateTime.CalculateTime('+');
                         break;
                     case "5":
                         Console.Clear();
-                        if (myDateTime.ValidateDateTime())
+                        //if (myDateTime.ValidateDateTime())
                             myDateTime.CalculateTime('-');
                         break;
                     case "6":
                         Console.Clear();
-                        if (myDateTime.ValidateDateTime())
+                        //if (myDateTime.ValidateDateTime())
                             Console.WriteLine("Full date is: " + myDateTime.firstCustomTime.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
                         break;
                     case "7":
@@ -55,7 +53,7 @@ namespace Lab1Core.Menu
                         break;
                     case "9":
                         Console.Clear();
-                        myDateTime.ValidateDateTime();
+                        //.ValidateDateTime();
                         DateTime dateTime = DateTime.FromOADate(myDateTime.firstCustomTime.ToOADate() + 2415018.5);
                         Console.WriteLine("Julian date for your date is: " + dateTime + '\n'); // may be incorrect, can not rly understand what is julian dates formula, but seems it is it
                         break;

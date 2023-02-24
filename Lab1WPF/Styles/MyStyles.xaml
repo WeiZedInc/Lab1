@@ -3,6 +3,11 @@
     <Style TargetType="Button">
         <Setter Property="BorderBrush" Value="Yellow"/>
         <Setter Property="Background" Value="Blue"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="7"/>
+            </Style>
+        </Style.Resources>
     </Style>
     <Style TargetType="{x:Type TextBox}">
         <Style.Resources>

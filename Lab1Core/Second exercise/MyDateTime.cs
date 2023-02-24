@@ -30,29 +30,24 @@ namespace Lab1Core
                 await Task.Delay(1000);
             }
         }
-        public bool ValidateDateTime(bool isFirstTime = true)
+        public bool ValidateDateTime(string input, bool isFirstTime = true)
         {
-            Console.WriteLine("Enter your time...");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime dt))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("DateTime isn't correct");
+            if (!DateTime.TryParse(input, out DateTime dt))
                 return false;
-            }
+
             if (isFirstTime)
                 firstCustomTime = dt;
             else
                 secondCustomTime = dt;
 
-            Console.WriteLine("Time is correct. (" + dt + ")\n");
             return true;
         }
 
 
         public void SubtractTime()
         {
-            if (!ValidateDateTime())
-                return;
+            //if (!ValidateDateTime())
+               // return;
 
             Console.WriteLine("Do you want to subtract this time with current time? y/n");
             string result = Console.ReadLine();
@@ -67,8 +62,8 @@ namespace Lab1Core
             else if (result == "n")
             {
                 Console.WriteLine("Subtraction with 2 custom values.");
-                if (!ValidateDateTime(false))
-                    return;
+                //if (!ValidateDateTime(false))
+                //    return;
 
                 customTimeSpan = firstCustomTime.Subtract(secondCustomTime);
                 string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString()).Replace("-", "");
@@ -265,7 +260,7 @@ namespace Lab1Core
             }
             else if (input == "new")
             {
-                ValidateDateTime();
+                //ValidateDateTime();
 
                 Console.WriteLine("Enter prefered time zone:");
                 newTimeZone = Console.ReadLine();
@@ -292,8 +287,8 @@ namespace Lab1Core
         public void FindMostPopularDayOfTheWeek()
         {
             Console.WriteLine("Please, enter the date range");
-            if (!ValidateDateTime() || !ValidateDateTime(false))
-                return;
+           // if (!ValidateDateTime() || !ValidateDateTime(false))
+            //    return;
 
             Console.WriteLine("Please, enter the day of the months");
             int dayNum = 0;
