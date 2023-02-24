@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ActiproSoftware.Controls.WPF.Shared" Version="22.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lab1Core\Lab1Core.csproj" />
   </ItemGroup>
 

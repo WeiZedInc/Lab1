@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace Lab1Core
 {
-    internal class MyDateTime
+    public class MyDateTime
     {
+        public delegate void TimeTickerHandler();
+        public event TimeTickerHandler TimeTicker;
+
         public DateTime firstCustomTime { get; set; }
         public DateTime secondCustomTime { get; set; }
         public TimeSpan customTimeSpan { get; set; }
+
         public MyDateTime()
         {
             firstCustomTime = new DateTime();
@@ -14,280 +20,70 @@ namespace Lab1Core
             customTimeSpan = new TimeSpan();
         }
 
-        public void ShowCurrentTime()
+        public async Task StartTimeTickerEvent()
         {
-            var currentTime = DateTime.Now;
-            Console.WriteLine("Current time: " + currentTime.ToString("\tdddd, dd MMMM yyyy HH:mm:ss"));
-            Console.WriteLine("Short variant: \t" + currentTime);
-            Console.WriteLine("Time zone: \t" + currentTime.ToString("GMT K\n"));
-        }
-        public bool ValidateDateTime(bool isFirstTime = true)
-        {
-            Console.WriteLine("Enter your time...");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime dt))
+            TimeTicker?.Invoke();
+            await Task.Delay(1000 - DateTime.Now.Millisecond);
+            while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("DateTime isn't correct");
-                return false;
+                TimeTicker?.Invoke();
+                await Task.Delay(1000);
             }
+        }
+        public bool ValidateDateTime(string input, bool isFirstTime = true)
+        {
+            if (!DateTime.TryParse(input, out DateTime dt))
+                return false;
+
             if (isFirstTime)
                 firstCustomTime = dt;
             else
                 secondCustomTime = dt;
 
-            Console.WriteLine("Time is correct. (" + dt + ")\n");
             return true;
         }
 
 
-        public void SubtractTime()
+        public string CalculateTime(bool isSubtractingWithCurrentTime, bool isSubtracting)
         {
-            if (!ValidateDateTime())
-                return;
-
-            Console.WriteLine("Do you want to subtract this time with current time? y/n");
-            string result = Console.ReadLine();
-            if (result == "y")
+            if (isSubtractingWithCurrentTime)
             {
                 var timeNow = DateTime.Now;
-                customTimeSpan = firstCustomTime.Subtract(timeNow);
-                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString()).Replace("-", "");
-                Console.WriteLine($"Result is: ({firstCustomTime}) - ({timeNow}) = {customTimeSpan.Days} days " + timeFormatted);
-                Console.WriteLine("Result saved for further calculations.\n");
-            }
-            else if (result == "n")
-            {
-                Console.WriteLine("Subtraction with 2 custom values.");
-                if (!ValidateDateTime(false))
-                    return;
-
-                customTimeSpan = firstCustomTime.Subtract(secondCustomTime);
-                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString()).Replace("-", "");
-                Console.WriteLine($"Result is: ({firstCustomTime}) - ({secondCustomTime}) = {customTimeSpan.Days} days " + timeFormatted);
-                Console.WriteLine("Result saved for further calculations.\n");
+                customTimeSpan = new TimeSpan(firstCustomTime.Add(new TimeSpan(timeNow.Ticks)).Ticks);
+                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString().Replace("-", ""));
+                return $"Time difference is: ({firstCustomTime}) - ({timeNow}) = {customTimeSpan.Days} days " + timeFormatted;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Answer isn't correct, try again.");
-                return;
-            }
-
-            Console.WriteLine("In which format do you want to get result?");
-            Console.WriteLine("Press any key for all formats  | d - days / h - hours / m - minutes / s - seconds");
-            switch (Console.ReadLine())
-            {
-                case "d":
-                    Console.WriteLine("d = " + customTimeSpan.TotalDays);
-                    break;
-                case "h":
-                    Console.WriteLine("h = " + customTimeSpan.TotalHours);
-                    break;
-                case "m":
-                    Console.WriteLine("m = " + customTimeSpan.TotalMinutes);
-                    break;
-                case "s":
-                    Console.WriteLine("s = " + customTimeSpan.TotalSeconds);
-                    break;
-                default:
-                    Console.WriteLine("Displaying all.");
-                    Console.WriteLine("d = " + customTimeSpan.TotalDays);
-                    Console.WriteLine("h = " + customTimeSpan.TotalHours);
-                    Console.WriteLine("m = " + customTimeSpan.TotalMinutes);
-                    Console.WriteLine("s = " + customTimeSpan.TotalSeconds);
-                    Console.WriteLine();
-                    break;
+                customTimeSpan = new TimeSpan(firstCustomTime.Add(new TimeSpan(secondCustomTime.Ticks)).Ticks);
+                string timeFormatted = (customTimeSpan.Hours.ToString() + ':' + customTimeSpan.Minutes.ToString() + ':' + customTimeSpan.Seconds.ToString().Replace("-", ""));
+                return $"Time difference is: ({firstCustomTime}) - ({secondCustomTime}) = {customTimeSpan.Days} days " + timeFormatted;
             }
         }
-        public void CalculateTime(char symbol)
+        public string SwitchTimeZones(string timeZone = "Pacific Standard Time")
         {
-            Console.WriteLine("Do you want to use saved result, or a new one? saved/new");
-            float value = 0;
-            string timeFormat = "";
-            switch (Console.ReadLine())
+            try
             {
-                case "saved":
-                    Console.WriteLine("Using saved value from last subtraction: " + customTimeSpan);
-                    timeFormat = "saved";
-                    break;
-                case "new":
-                    Console.WriteLine("Enter time format. (d - days, h - hours, m - minutes, s - seconds)");
-                    timeFormat = Console.ReadLine();
-                    switch (timeFormat)
-                    {
-                        case "d":
-                            Console.WriteLine("Enter days amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "h":
-                            Console.WriteLine("Enter hours amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "m":
-                            Console.WriteLine("Enter minutes amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        case "s":
-                            Console.WriteLine("Enter second amount:");
-                            if (!float.TryParse(Console.ReadLine(), out value))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Incorrect input.");
-                                return;
-                            }
-                            break;
-                        default:
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Incorrect format.");
-                            return;
-                    }
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Incorrect input.");
-                    return;
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                return "Local time in other time zone: " + date + " " + tz.DisplayName + '\n';
             }
-
-
-            if (symbol == '+')
+            catch (TimeZoneNotFoundException)
             {
-                switch (timeFormat)
-                {
-                    case "d":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(value));
-                        break;
-                    case "h":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddHours(value));
-                        break;
-                    case "m":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddMinutes(value));
-                        break;
-                    case "s":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddSeconds(value));
-                        break;
-                    case "saved":
-
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(customTimeSpan.TotalDays));
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Idk how did u get here :3");
-                        break;
-                }
+                return "There are no such time zone.";
             }
-            else
-            {
-                switch (timeFormat)
-                {
-                    case "d":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(-value));
-                        break;
-                    case "h":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddHours(-value));
-                        break;
-                    case "m":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddMinutes(-value));
-                        break;
-                    case "s":
-                        Console.WriteLine("Result is: " + firstCustomTime.AddSeconds(-value));
-                        break;
-                    case "saved":
-
-                        Console.WriteLine("Result is: " + firstCustomTime.AddDays(-customTimeSpan.TotalDays));
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Idk how did u get here :3");
-                        break;
-                }
-            }
-            Console.WriteLine();
         }
 
-
-        public void SwitchTimeZones()
+        public string JulianDate()
         {
-            Console.WriteLine("Do you want to see all time zones? y/n \n");
-            string timeInput = Console.ReadLine();
-            string newTimeZone = "Pacific Standard Time";
-            if (timeInput == "y")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                foreach (TimeZoneInfo tz in TimeZoneInfo.GetSystemTimeZones())
-                    Console.WriteLine(tz.DisplayName + " - \n" + tz.Id + "\n");
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-
-            Console.WriteLine("\n\n Do you want to change time zone for current computer time, or new? current/new ");
-            string input = Console.ReadLine();
-            if (input == "current")
-            {
-                Console.WriteLine("Enter prefered time zone (use only english timezone names from the offered list):");
-                newTimeZone = Console.ReadLine();
-                var currentTime = DateTime.Now;
-                try
-                {
-                    var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
-                    var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-                    Console.WriteLine("Local time in other time zone: " + date + " " + tz.DisplayName + '\n');
-                }
-                catch (TimeZoneNotFoundException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There are no such time zone.");
-                    return;
-                }
-
-
-            }
-            else if (input == "new")
-            {
-                ValidateDateTime();
-
-                Console.WriteLine("Enter prefered time zone:");
-                newTimeZone = Console.ReadLine();
-                try
-                {
-                    var tz = TimeZoneInfo.FindSystemTimeZoneById(newTimeZone);
-                    var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-                    Console.WriteLine("New time in other time zone: " + date + " " + tz.DisplayName + '\n');
-                }
-                catch (TimeZoneNotFoundException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("There are no such time zone.");
-                    return;
-                }
-
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong input.");
-            }
+            DateTime dateTime = DateTime.FromOADate(firstCustomTime.ToOADate() + 2415018.5);
+            return "Julian date for your date is: " + dateTime;
         }
-        public void FindMostPopularDayOfTheWeek()
-        {
-            Console.WriteLine("Please, enter the date range");
-            if (!ValidateDateTime() || !ValidateDateTime(false))
-                return;
 
-            Console.WriteLine("Please, enter the day of the months");
-            int dayNum = 0;
+        public string FindDayByDate() => "Full date is: " + firstCustomTime.ToString("dddd, dd MMMM yyyy");
+
+        public string FindMostPopularDayOfTheWeek(int dayNum = 1)
+        {
             DateTime finishDate = DateTime.Now, startDate = DateTime.Now;
             Dictionary<string, int> daysCounter = new Dictionary<string, int>
         {
@@ -301,9 +97,7 @@ namespace Lab1Core
         };
             if (!int.TryParse(Console.ReadLine(), out dayNum) || dayNum > 31 || dayNum < 1)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Incorrect day number, try again.");
-                return;
+                return "";
             }
 
             if (DateTime.Compare(firstCustomTime, secondCustomTime) > 0)
@@ -313,9 +107,7 @@ namespace Lab1Core
             }
             else if (DateTime.Compare(firstCustomTime, secondCustomTime) == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Dates cannot be the same");
-                return;
+                return "";
             }
             else if (DateTime.Compare(firstCustomTime, secondCustomTime) < 0)
             {
@@ -334,7 +126,7 @@ namespace Lab1Core
                 daysLeft--;
             }
 
-            Console.WriteLine("The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.");
+            return "The most popular day of the week in tha range is: " + daysCounter.Keys.Max() + " with count of " + daysCounter.Values.Max().ToString() + " days.";
         }
     }
 }
